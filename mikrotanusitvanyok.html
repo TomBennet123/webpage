@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="hu" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pannon Egyetem - Mikrotanúsítványok</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind's gray-50 */
+        }
+        :root {
+            --brand-color: #1c3864;
+            --course1-color: #3b82f6; /* blue-500 */
+            --course2-color: #22c55e; /* green-500 */
+            --course3-color: #f97316; /* orange-500 */
+            --course4-color: #8b5cf6; /* violet-500 */
+            --course5-color: #14b8a6; /* teal-500 */
+        }
+        .course-card {
+            border-left-width: 6px;
+            transition: all 0.3s ease-in-out;
+        }
+        .tab-btn.active {
+            font-weight: 600;
+            color: #fff;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 4px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            background-color: #e2e8f0; /* slate-200 */
+            border-left-color: var(--brand-color);
+            color: var(--brand-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="flex bg-slate-50">
+
+    <!-- SIDE NAVIGATION -->
+    <nav class="bg-slate-100 text-gray-700 w-[220px] lg:w-[280px] fixed top-0 left-0 h-full p-4 lg:p-6 overflow-y-auto hidden md:block border-r border-slate-200">
+        <div class="mb-8">
+     <!--        <h2 class="text-2xl font-bold text-[var(--brand-color)]">Mikrotanúsítványok</h2>-->
+     <!--        <p class="text-sm text-gray-500">Pannon Egyetem Mérnöki Kar</p>-->
+        </div>
+        <ul>
+            <li class="mb-3"><a href="#bevezeto" class="nav-link block p-3 rounded-r-lg"><i class="fas fa-info-circle w-6 mr-2"></i>Áttekintés</a></li>
+            <li class="mb-3"><a href="#kepzes-1" class="nav-link block p-3 rounded-r-lg"><i class="fas fa-cogs w-6 mr-2"></i>Digitális gyártás</a></li>
+            <li class="mb-3"><a href="#kepzes-2" class="nav-link block p-3 rounded-r-lg"><i class="fas fa-brain w-6 mr-2"></i>Adattudomány</a></li>
+            <li class="mb-3"><a href="#kepzes-3" class="nav-link block p-3 rounded-r-lg"><i class="fas fa-flask w-6 mr-2"></i>Reakciótechnika</a></li>
+            <li class="mb-3"><a href="#kepzes-4" class="nav-link block p-3 rounded-r-lg"><i class="fas fa-atom w-6 mr-2"></i>Nukleáris techn.</a></li>
+            <li class="mb-3"><a href="#kepzes-5" class="nav-link block p-3 rounded-r-lg"><i class="fas fa-dna w-6 mr-2"></i>Biotechnológia</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="w-full md:ml-[220px] lg:ml-[280px] p-4 sm:p-6 lg:p-10">
+        
+        <!-- INTRO SECTION -->
+        <section id="bevezeto" class="mb-12 bg-white p-6 rounded-lg shadow-sm">
+            <h1 class="text-3xl font-bold text-[var(--brand-color)] mb-4">Mikrotanúsítványok 2026 februárjától</h1>
+            <p class="text-lg text-gray-700 mb-6">Szeretne naprakész, versenyképes tudást szerezni? A Pannon Egyetem Mérnöki Kar mikrotanúsítványi képzései 2026 februárjától rugalmas megoldást kínálnak mindazoknak, akik karrierépítésben, szakmai fejlődésben vagy továbbtanulásban gondolkodnak!</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-blue-50 p-4 rounded-lg flex items-start">
+                    <i class="fas fa-book-open text-xl text-blue-600 mt-1 mr-4"></i>
+                    <div><h3 class="font-semibold text-gray-800">Korszerű, gyakorlati tudás</h3><p class="text-sm text-gray-600">Ipari és kutatási környezetben</p></div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg flex items-start">
+                    <i class="fas fa-clock text-xl text-green-600 mt-1 mr-4"></i>
+                    <div><h3 class="font-semibold text-gray-800">Rugalmas időbeosztás</h3><p class="text-sm text-gray-600">Levelező tagozatos órák</p></div>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg flex items-start">
+                    <i class="fas fa-laptop text-xl text-yellow-600 mt-1 mr-4"></i>
+                    <div><h3 class="font-semibold text-gray-800">Online lehetőségek</h3><p class="text-sm text-gray-600">Egyes képzések távolról is elérhetők</p></div>
+                </div>
+                 <div class="bg-indigo-50 p-4 rounded-lg flex items-start">
+                    <i class="fas fa-graduation-cap text-xl text-indigo-600 mt-1 mr-4"></i>
+                    <div><h3 class="font-semibold text-gray-800">Hallgatói jogviszony</h3><p class="text-sm text-gray-600">A képzés ideje alatt biztosított</p></div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg flex items-start">
+                    <i class="fas fa-check-circle text-xl text-purple-600 mt-1 mr-4"></i>
+                    <div><h3 class="font-semibold text-gray-800">Beszámítható tantárgyak</h3><p class="text-sm text-gray-600">Előtanulmányként is szolgál</p></div>
+                </div>
+            </div>
+            <div class="mt-8 bg-gray-100 p-4 rounded-lg text-center">
+                <p class="font-bold text-gray-800"><i class="fas fa-calendar-alt mr-2"></i>Jelentkezési határidő: <span class="text-[var(--brand-color)]">2026. január 31.</span></p>
+                <p class="font-bold text-gray-800"><i class="fas fa-rocket mr-2"></i>Indulás: <span class="text-[var(--brand-color)]">2026. február</span></p>
+            </div>
+        </section>
+
+        <!-- COURSES CONTAINER -->
+        <div class="space-y-12">
+
+            <!-- COURSE 1: Digitális gyártás -->
+            <section id="kepzes-1" class="course-card bg-white rounded-lg shadow-sm" style="border-color: var(--course1-color);">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Digitális gyártás és modern termelési rendszerek</h2>
+                    <div class="tabs" data-course-color="var(--course1-color)">
+                        <div class="flex border-b border-gray-200 mb-4">
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="1">Részletek</button>
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="2">Képzés adatai</button>
+                        </div>
+                        <div class="tab-content" data-tab-content="1">
+                             <div class="md:flex md:space-x-6">
+                                <img src="https://shop.uni-pannon.hu/wp-content/uploads/2025/10/MK_Digitalis_gyartas_AI_kep-600x404.png" alt="Digitális gyártás illusztráció" class="rounded-lg shadow-md mb-4 md:mb-0 w-full md:w-1/3 h-auto object-cover self-start" onerror="this.style.display='none'">
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-700">Tanulja meg, hogyan optimalizálhatók a termelési folyamatok a digitális világban!</h3>
+                                    <p class="text-gray-600 mb-4">A képzés során megismerheted a korszerű gyártástervezés alapjait és a digitális, rugalmas gyártórendszerek működését. Gyakorlati példákon keresztül tanulhatod meg, hogyan optimalizálhatók a termelési folyamatok, hogyan növelhető a hatékonyság és a versenyképesség.</p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-5">
+                                        <li>Gyártástervezés, rugalmasság és hatékonyság a modern iparban</li>
+                                        <li>Gyakorlati példák, naprakész tudás</li>
+                                        <li>A képzés tantárgyai beszámíthatók a Gépészmérnöki BSc alapszakba</li>
+                                    </ul>
+                                    <a href="https://shop.uni-pannon.hu/hu/termek/digitalis-gyartas-es-modern-termelesi-rendszerek/" target="_blank" class="inline-block text-white font-bold py-2 px-5 rounded-lg transition-transform duration-200 hover:scale-105 shadow" style="background-color: var(--course1-color);">Jelentkezés</a>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="tab-content" data-tab-content="2">
+                             <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-600">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                        <tr><th colspan="3" class="px-6 py-3">Általános adatok</th></tr>
+                                    </thead>
+                                    <tbody>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Ár</td><td class="px-6 py-3" colspan="2">240.000 Ft</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Időpont</td><td class="px-6 py-3" colspan="2">2026. február 01. - május 31.</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Óraszám</td><td class="px-6 py-3" colspan="2">50 óra</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Forma</td><td class="px-6 py-3" colspan="2">Jelenléti</td></tr>
+                                    </tbody>
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100 mt-4">
+                                        <tr><th class="px-6 py-3">Tárgynév</th><th class="px-6 py-3">Tárgykód</th><th class="px-6 py-3">Kredit</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Gyártástervezés</td><td class="px-6 py-4">VEMKGEB256GY</td><td class="px-6 py-4">6</td></tr>
+                                        <tr class="bg-white"><td class="px-6 py-4">Digitális gyártás és rugalmas gyártórendszerek</td><td class="px-6 py-4">VEMKGEB279DR</td><td class="px-6 py-4">9</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COURSE 2: Adattudomány -->
+            <section id="kepzes-2" class="course-card bg-white rounded-lg shadow-sm" style="border-color: var(--course2-color);">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Adattudomány és gépi tanulás</h2>
+                    <div class="tabs" data-course-color="var(--course2-color)">
+                        <div class="flex border-b border-gray-200 mb-4">
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="1">Részletek</button>
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="2">Képzés adatai</button>
+                        </div>
+                        <div class="tab-content" data-tab-content="1">
+                           <div class="md:flex md:space-x-6">
+                                <img src="https://shop.uni-pannon.hu/wp-content/uploads/2025/09/MK_Adattudomany_gepi.tanulas_AI_kep-600x404.png" alt="Adattudomány illusztráció" class="rounded-lg shadow-md mb-4 md:mb-0 w-full md:w-1/3 h-auto object-cover self-start" onerror="this.style.display='none'">
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-700">Lépjen be az adatvezérelt döntéshozatal világába!</h3>
+                                    <p class="text-gray-600 mb-4">Ez a képzés bevezetést nyújt a mesterséges intelligencia és a gépi tanulás világába, gyakorlati példákon keresztül mutatva be az adatelemzés legmodernebb módszereit. A hallgatók megtanulják, hogyan lehet nagy adathalmazokból értékes információt kinyerni, prediktív modelleket készíteni és azokat ipari, gazdasági vagy kutatási környezetben alkalmazni.</p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-5">
+                                        <li>Gépi tanulási módszerek megismerése</li>
+                                        <li>Adatmodellek készítése és elemzése</li>
+                                        <li>Ideális választás az MI és adattudomány iránt érdeklődőknek</li>
+                                        <li>Tantárgyak beszámíthatók a Mesterséges intelligencia megoldásokat fejlesztő adat- és rendszertudományi szakmérnök/szakember szakirányú továbbképzésbe</li>
+                                    </ul>
+                                     <a href="https://shop.uni-pannon.hu/hu/termek/adattudomany-es-gepi-tanulas/" target="_blank" class="inline-block text-white font-bold py-2 px-5 rounded-lg transition-transform duration-200 hover:scale-105 shadow" style="background-color: var(--course2-color);">Jelentkezés</a>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="tab-content" data-tab-content="2">
+                           <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-600">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                        <tr><th colspan="3" class="px-6 py-3">Általános adatok</th></tr>
+                                    </thead>
+                                    <tbody>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Ár</td><td class="px-6 py-3" colspan="2">240.000 Ft</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Időpont</td><td class="px-6 py-3" colspan="2">2026. február 01. - május 31.</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Óraszám</td><td class="px-6 py-3" colspan="2">48 óra</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Forma</td><td class="px-6 py-3" colspan="2">Online</td></tr>
+                                    </tbody>
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100 mt-4">
+                                        <tr><th class="px-6 py-3">Tárgynév</th><th class="px-6 py-3">Tárgykód</th><th class="px-6 py-3">Kredit</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white"><td class="px-6 py-4">Adattudomány és gépi tanulás</td><td class="px-6 py-4">VEMKFOT13XA</td><td class="px-6 py-4">15</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- COURSE 3: Reakciótechnika -->
+            <section id="kepzes-3" class="course-card bg-white rounded-lg shadow-sm" style="border-color: var(--course3-color);">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Korszerű reakciótechnika és kolloidkémia</h2>
+                    <div class="tabs" data-course-color="var(--course3-color)">
+                        <div class="flex border-b border-gray-200 mb-4">
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="1">Részletek</button>
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="2">Képzés adatai</button>
+                        </div>
+                        <div class="tab-content" data-tab-content="1">
+                             <div class="md:flex md:space-x-6">
+                                <img src="https://shop.uni-pannon.hu/wp-content/uploads/2025/08/MIK_MI_es_adatvizualizacio_AI_kep-600x401.png" alt="Reakciótechnika illusztráció" class="rounded-lg shadow-md mb-4 md:mb-0 w-full md:w-1/3 h-auto object-cover self-start" onerror="this.style.display='none'">
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-700">Fejlessze tudását a modern kémiai folyamatok területén!</h3>
+                                    <p class="text-gray-600 mb-4">A mikrotanúsítvány célja, hogy a hallgatók korszerű ismereteket szerezzenek a kolloidkémia, valamint a reakciótechnikai folyamatok elméleti és gyakorlati területén. A program során a résztvevők elsajátítják a modern reakciómérnöki módszereket, és laboratóriumi gyakorlatokon keresztül közvetlen tapasztalatot szereznek.</p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-5">
+                                        <li>Korszerű reakciótechnika elméleti és gyakorlati ismeretekkel</li>
+                                        <li>Laboratóriumi gyakorlatok, kísérleti tapasztalatok</li>
+                                        <li>Tantárgyak beszámíthatók a Vegyészmérnöki MSc mesterszakba</li>
+                                    </ul>
+                                     <a href="https://shop.uni-pannon.hu/hu/termek/korszeru-reakciotechnika-es-kolloidkemia/" target="_blank" class="inline-block text-white font-bold py-2 px-5 rounded-lg transition-transform duration-200 hover:scale-105 shadow" style="background-color: var(--course3-color);">Jelentkezés</a>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="tab-content" data-tab-content="2">
+                           <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-600">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                        <tr><th colspan="3" class="px-6 py-3">Általános adatok</th></tr>
+                                    </thead>
+                                    <tbody>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Ár</td><td class="px-6 py-3" colspan="2">192.000 Ft</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Időpont</td><td class="px-6 py-3" colspan="2">2026. február 01. - május 31.</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Óraszám</td><td class="px-6 py-3" colspan="2">45 óra</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Forma</td><td class="px-6 py-3" colspan="2">Jelenléti</td></tr>
+                                    </tbody>
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100 mt-4">
+                                        <tr><th class="px-6 py-3">Tárgynév</th><th class="px-6 py-3">Tárgykód</th><th class="px-6 py-3">Kredit</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Kolloidkémia</td><td class="px-6 py-4">VEMKTTM213KL</td><td class="px-6 py-4">3</td></tr>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Korszerű reakciótechnika</td><td class="px-6 py-4">VEMKBKM216KR</td><td class="px-6 py-4">6</td></tr>
+                                        <tr class="bg-white"><td class="px-6 py-4">Korszerű reakciótechnika laboratóriumi gyakorlat</td><td class="px-6 py-4">VEMKBKM333KL</td><td class="px-6 py-4">3</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- COURSE 4: Nukleáris technológiák -->
+             <section id="kepzes-4" class="course-card bg-white rounded-lg shadow-sm" style="border-color: var(--course4-color);">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Nukleáris technológiák és sugárvédelem</h2>
+                    <div class="tabs" data-course-color="var(--course4-color)">
+                        <div class="flex border-b border-gray-200 mb-4">
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="1">Részletek</button>
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="2">Képzés adatai</button>
+                        </div>
+                        <div class="tab-content" data-tab-content="1">
+                           <div class="md:flex md:space-x-6">
+                                <img src="https://shop.uni-pannon.hu/wp-content/uploads/2025/10/MK_Nuklearis-technologiak_AI_kep-600x404.png" alt="Nukleáris technológiák illusztráció" class="rounded-lg shadow-md mb-4 md:mb-0 w-full md:w-1/3 h-auto object-cover self-start" onerror="this.style.display='none'">
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-700">Ismerje meg a nukleáris ipar korszerű technológiáit és a sugárvédelem alapjait!</h3>
+                                    <p class="text-gray-600 mb-4">A mikrotanúsítvány átfogó képet nyújt a nukleáris ipar és a radiokémia korszerű alkalmazásairól. A résztvevők megismerkednek a radioizotópok felhasználási területeivel, betekintést nyernek a sugár- és nukleáris balesetek tanulságaiba, valamint elmélyült tudást szereznek a dozimetria és a sugárvédelem alapjaiban.</p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-5">
+                                        <li>Radioizotóp alkalmazások</li>
+                                        <li>Sugárzás- és baleset-megelőzés</li>
+                                        <li>Atomenergia és környezetbiztonság</li>
+                                        <li>Tantárgyak beszámíthatók a Vegyészmérnöki MSc mesterszakba</li>
+                                    </ul>
+                                    <a href="https://shop.uni-pannon.hu/hu/termek/nuklearis-technologiak-es-sugarvedelem/" target="_blank" class="inline-block text-white font-bold py-2 px-5 rounded-lg transition-transform duration-200 hover:scale-105 shadow" style="background-color: var(--course4-color);">Jelentkezés</a>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="tab-content" data-tab-content="2">
+                           <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-600">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                        <tr><th colspan="3" class="px-6 py-3">Általános adatok</th></tr>
+                                    </thead>
+                                    <tbody>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Ár</td><td class="px-6 py-3" colspan="2">192.000 Ft</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Időpont</td><td class="px-6 py-3" colspan="2">2026. február 01. - május 31.</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Óraszám</td><td class="px-6 py-3" colspan="2">40 óra</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Forma</td><td class="px-6 py-3" colspan="2">Jelenléti</td></tr>
+                                    </tbody>
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100 mt-4">
+                                        <tr><th class="px-6 py-3">Tárgynév</th><th class="px-6 py-3">Tárgykód</th><th class="px-6 py-3">Kredit</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Radioizotóp alkalmazások</td><td class="px-6 py-4">VEMKRKB113RI</td><td class="px-6 py-4">3</td></tr>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Sugaras és nukleáris balesetek tapasztalatai</td><td class="px-6 py-4">VEMKRAM223NB</td><td class="px-6 py-4">3</td></tr>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Dozimetria és sugárvédelem</td><td class="px-6 py-4">VEMKRKB213DS</td><td class="px-6 py-4">3</td></tr>
+                                        <tr class="bg-white"><td class="px-6 py-4">Atomenergetika</td><td class="px-6 py-4">VEMKRKM313AE</td><td class="px-6 py-4">3</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- COURSE 5: Biotechnológia -->
+            <section id="kepzes-5" class="course-card bg-white rounded-lg shadow-sm" style="border-color: var(--course5-color);">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Biotechnológiai folyamatok és alkalmazások</h2>
+                    <div class="tabs" data-course-color="var(--course5-color)">
+                        <div class="flex border-b border-gray-200 mb-4">
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="1">Részletek</button>
+                            <button class="tab-btn py-2 px-4 text-gray-600" data-tab="2">Képzés adatai</button>
+                        </div>
+                        <div class="tab-content" data-tab-content="1">
+                           <div class="md:flex md:space-x-6">
+                                <img src="https://shop.uni-pannon.hu/wp-content/uploads/2025/10/MK_Biotechnologiai_folyamatok_AI_kep.png" alt="Biotechnológia illusztráció" class="rounded-lg shadow-md mb-4 md:mb-0 w-full md:w-1/3 h-auto object-cover self-start" onerror="this.style.display='none'">
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-700">Szerezzen korszerű ismereteket a biotechnológiai iparban és kutatásban!</h3>
+                                    <p class="text-gray-600 mb-4">A mikrotanúsítvány célja, hogy a hallgatók korszerű ismereteket szerezzenek a biotechnológia ipari és kutatási folyamatairól. A program során megismerhetik a biotechnológiai műveletek alapjait, a speciális bioreaktorok működését és a nem-vizes közegű enzimes technológiák lehetőségeit.</p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-5">
+                                        <li>Biotechnológiai műveletek, különleges bioreaktorok</li>
+                                        <li>Modern gyógyszeripari és környezetvédelmi biotechnológia</li>
+                                        <li>Tantárgyak beszámíthatók a Vegyészmérnöki MSc mesterszakba</li>
+                                    </ul>
+                                    <a href="https://shop.uni-pannon.hu/hu/termek/biotechnologiai-folyamatok-es-alkalmazasok/" target="_blank" class="inline-block text-white font-bold py-2 px-5 rounded-lg transition-transform duration-200 hover:scale-105 shadow" style="background-color: var(--course5-color);">Jelentkezés</a>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="tab-content" data-tab-content="2">
+                           <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-600">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                        <tr><th colspan="3" class="px-6 py-3">Általános adatok</th></tr>
+                                    </thead>
+                                    <tbody>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Ár</td><td class="px-6 py-3" colspan="2">208.000 Ft</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Időpont</td><td class="px-6 py-3" colspan="2">2026. február 01. - május 31.</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Óraszám</td><td class="px-6 py-3" colspan="2">55 óra</td></tr>
+                                         <tr class="bg-white border-b"><td class="px-6 py-3 font-medium">Forma</td><td class="px-6 py-3" colspan="2">Jelenléti</td></tr>
+                                    </tbody>
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-100 mt-4">
+                                        <tr><th class="px-6 py-3">Tárgynév</th><th class="px-6 py-3">Tárgykód</th><th class="px-6 py-3">Kredit</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Biotechnológiai műveletek</td><td class="px-6 py-4">VEMKBVM213BT</td><td class="px-6 py-4">3</td></tr>
+                                        <tr class="bg-white border-b"><td class="px-6 py-4">Különleges bioreaktorok</td><td class="px-6 py-4">VEMKBMM256KB</td><td class="px-6 py-4">6</td></tr>
+                                        <tr class="bg-white"><td class="px-6 py-4">Nem vizes közegű enzimes technológiák</td><td class="px-6 py-4">VEMKBMM454E</td><td class="px-6 py-4">4</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const allTabsContainers = document.querySelectorAll('.tabs');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            // Tab functionality
+            allTabsContainers.forEach(tabsContainer => {
+                const tabButtons = tabsContainer.querySelectorAll('.tab-btn');
+                const tabContents = tabsContainer.querySelectorAll('.tab-content');
+                const courseColor = tabsContainer.dataset.courseColor;
+
+                function setActiveTab(tabNumber) {
+                    tabButtons.forEach(btn => {
+                        if (btn.dataset.tab === tabNumber) {
+                            btn.classList.add('active');
+                            btn.style.backgroundColor = courseColor;
+                            btn.style.borderColor = courseColor;
+                        } else {
+                            btn.classList.remove('active');
+                            btn.style.backgroundColor = 'transparent';
+                            btn.style.borderColor = 'transparent';
+                            btn.style.color = '#4b5563'; // tailwind gray-600
+                        }
+                    });
+                    tabContents.forEach(content => {
+                        content.classList.toggle('active', content.dataset.tabContent === tabNumber);
+                    });
+                }
+                
+                setActiveTab('1'); // Set default active tab
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        setActiveTab(button.dataset.tab);
+                    });
+                });
+            });
+
+            // Active nav link on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
