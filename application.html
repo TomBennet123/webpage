@@ -1,269 +1,451 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University of Pannonia - International Student Application</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(125, 211, 252, 0.35), transparent 55%),
+                radial-gradient(circle at 88% 12%, rgba(192, 132, 252, 0.28), transparent 55%),
+                radial-gradient(circle at 20% 88%, rgba(134, 239, 172, 0.35), transparent 60%),
+                linear-gradient(135deg, #f8fafc 0%, #e6f2ff 50%, #f6ecff 100%);
+            background-attachment: fixed;
+            color: #1e293b;
         }
-        /* Simple scroll spy for navigation */
-        .scroll-spy-active {
-            color: #1d4ed8; /* blue-700 */
-            border-left-color: #1d4ed8; /* blue-700 */
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            inset: auto;
+            width: 55vmax;
+            height: 55vmax;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: -2;
+        }
+        body::before {
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.45), transparent 70%);
+            top: -22vmax;
+            right: -12vmax;
+        }
+        body::after {
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.38), transparent 72%);
+            bottom: -28vmax;
+            left: -8vmax;
+        }
+        :root {
+            --brand-color: #1c3864;
+            --accent-blue: #38bdf8;
+            --accent-green: #34d399;
+            --accent-amber: #fbbf24;
+            --accent-rose: #fb7185;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            backdrop-filter: blur(22px);
+            box-shadow: 0 25px 45px rgba(15, 23, 42, 0.12);
+            color: #0f172a;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            backdrop-filter: blur(28px);
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.45), rgba(148, 163, 184, 0.15), rgba(255, 255, 255, 0));
+            opacity: 0.75;
+            pointer-events: none;
+        }
+        .glass-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .section-card {
+            border-left: 6px solid var(--accent-color, rgba(56, 189, 248, 0.7));
+            border-radius: 22px;
+            padding: 2.5rem;
+        }
+        .section-card h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 1.75rem;
+        }
+        .section-card h3 {
             font-weight: 600;
+            color: #0f172a;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 4px solid transparent;
+            color: rgba(15, 23, 42, 0.75);
+        }
+        .nav-link.active, .nav-link:hover {
+            background: rgba(148, 163, 184, 0.28);
+            border-left-color: rgba(56, 189, 248, 0.75);
+            color: #0f172a;
+            font-weight: 600;
+            transform: translateX(6px);
+        }
+        .info-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(165, 180, 252, 0.12));
+            color: rgba(15, 23, 42, 0.8);
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0.625rem;
+            width: 1px;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg, rgba(148, 163, 184, 0.35), rgba(56, 189, 248, 0.45));
+        }
+        .timeline-step {
+            position: relative;
+            padding-left: 2.75rem;
+        }
+        .timeline-step::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.35rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            border: 2px solid rgba(56, 189, 248, 0.8);
+            background: #fff;
+            box-shadow: 0 8px 18px rgba(56, 189, 248, 0.25);
+        }
+        .timeline-step.success::before {
+            border-color: rgba(16, 185, 129, 0.85);
+            box-shadow: 0 8px 18px rgba(16, 185, 129, 0.25);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5f5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a5b4fc;
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="text-slate-900">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-12 lg:py-16 space-y-12">
+        <header class="glass-panel rounded-3xl px-8 md:px-12 py-10 shadow-lg">
+            <div class="flex flex-col lg:flex-row lg:items-center gap-8">
+                <div class="flex-1 space-y-5">
+                    <span class="info-badge uppercase tracking-[0.2em] text-xs text-slate-600">International Admissions</span>
+                    <h1 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
+                        Application Guide for International Students
+                    </h1>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        Follow our curated steps to apply for a self-funded programme or explore scholarship opportunities at the University of Pannonia. Discover deadlines, required documents and financial information presented with clarity.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-days text-sky-500"></i>
+                            Updated for the 2024/25 academic year
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-language text-indigo-500"></i>
+                            Support in English & Hungarian
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 relative">
+                    <div class="glass-card rounded-3xl px-8 py-10 h-full flex flex-col justify-center gap-4" style="--accent-color: var(--accent-blue);">
+                        <div class="flex items-center gap-3 text-sky-600 font-semibold text-sm uppercase tracking-wider">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Start your journey today
+                        </div>
+                        <p class="text-slate-600 text-base leading-relaxed">
+                            Ready to apply? Download the application form and reach out to our faculty coordinators. We are here to help you at every step, from preparing documents to settling into Veszprém.
+                        </p>
+                        <a href="https://felveteli.mk.uni-pannon.hu/images/dokumentumok/felveteli/application/application_form_UP%201.docx" class="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold px-5 py-3 rounded-full transition-all shadow-lg shadow-sky-200/70">
+                            <i class="fa-solid fa-download"></i>
+                            Download Application Form
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-    <div class="container mx-auto px-4 py-8 md:py-12">
-
-
-        <div class="flex flex-col lg:flex-row gap-12">
-            <!-- Sticky Navigation (for larger screens) -->
-            <aside class="hidden lg:block lg:w-1/4 sticky top-8 self-start">
-                <nav class="space-y-2">
-                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">On This Page</h3>
-                    <a href="#self-funded" class="block text-gray-600 hover:text-blue-700 border-l-2 border-transparent hover:border-blue-700 pl-4 py-1 transition-colors duration-200">Self-Funded Application</a>
-                    <a href="#scholarships" class="block text-gray-600 hover:text-blue-700 border-l-2 border-transparent hover:border-blue-700 pl-4 py-1 transition-colors duration-200">Scholarship Opportunities</a>
-                    <a href="#documents" class="block text-gray-600 hover:text-blue-700 border-l-2 border-transparent hover:border-blue-700 pl-4 py-1 transition-colors duration-200">Required Documents</a>
-                    <a href="#fees" class="block text-gray-600 hover:text-blue-700 border-l-2 border-transparent hover:border-blue-700 pl-4 py-1 transition-colors duration-200">Fees & Payment</a>
-                    <a href="#rules" class="block text-gray-600 hover:text-blue-700 border-l-2 border-transparent hover:border-blue-700 pl-4 py-1 transition-colors duration-200">Important Rules</a>
-                    <a href="#general-info" class="block text-gray-600 hover:text-blue-700 border-l-2 border-transparent hover:border-blue-700 pl-4 py-1 transition-colors duration-200">General Information</a>
-                </nav>
+        <div class="flex flex-col lg:flex-row gap-10">
+            <aside class="lg:w-1/4 space-y-6">
+                <div class="glass-panel rounded-3xl p-6 sticky top-10">
+                    <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">On this page</h3>
+                    <nav class="flex flex-col gap-2 text-sm">
+                        <a href="#self-funded" class="nav-link rounded-2xl px-4 py-2">Self-Funded Application</a>
+                        <a href="#scholarships" class="nav-link rounded-2xl px-4 py-2">Scholarship Opportunities</a>
+                        <a href="#documents" class="nav-link rounded-2xl px-4 py-2">Required Documents</a>
+                        <a href="#fees" class="nav-link rounded-2xl px-4 py-2">Fees &amp; Payment</a>
+                        <a href="#rules" class="nav-link rounded-2xl px-4 py-2">Important Rules</a>
+                        <a href="#general-info" class="nav-link rounded-2xl px-4 py-2">General Information</a>
+                    </nav>
+                </div>
+                <div class="glass-panel rounded-3xl p-6 text-sm text-slate-600 space-y-3">
+                    <div class="flex items-center gap-3 text-sky-600 font-semibold">
+                        <i class="fa-solid fa-headset"></i>
+                        Need assistance?
+                    </div>
+                    <p>Email us at <a href="mailto:facultyofengineering@mk.uni-pannon.hu" class="text-sky-600 font-semibold hover:underline">facultyofengineering@mk.uni-pannon.hu</a> or contact the faculty coordinators for guidance.</p>
+                </div>
             </aside>
-            
-            <!-- Main Content -->
-            <main class="lg:w-3/4">
-                <!-- Self-Funded Application Section -->
-                <section id="self-funded" class="mb-12 bg-white p-8 rounded-xl shadow-md">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">Applying for a Self-Funded Programme</h2>
 
-                    <!-- Application Periods -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg">
-                            <h3 class="font-bold text-lg text-blue-800">Autumn Semester Intake</h3>
-                            <p class="text-gray-700">Application Period:</p>
-                            <p class="text-2xl font-semibold text-gray-900">1st Feb – 30th Apr</p>
+            <main class="lg:w-3/4 space-y-10">
+                <section id="self-funded" class="glass-card section-card" style="--accent-color: var(--accent-blue);">
+                    <h2>Applying for a Self-Funded Programme</h2>
+                    <p class="text-slate-600 leading-relaxed mb-8">Follow each step to submit your self-funded application successfully. The entire process can be completed online, and our faculty coordinators will support you throughout.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                        <div class="rounded-2xl border border-sky-200/70 bg-sky-50/70 p-6">
+                            <h3 class="text-lg font-semibold text-sky-800 flex items-center gap-2"><i class="fa-solid fa-sun"></i> Autumn Semester Intake</h3>
+                            <p class="text-slate-600 mt-2">Application Period:</p>
+                            <p class="text-2xl font-semibold text-slate-900">1st Feb – 30th Apr</p>
                         </div>
-                        <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-r-lg">
-                            <h3 class="font-bold text-lg text-green-800">Spring Semester Intake</h3>
-                            <p class="text-gray-700">Application Period:</p>
-                            <p class="text-2xl font-semibold text-gray-900">15th Aug – 15th Oct</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Application Process Steps -->
-                    <h3 class="text-xl font-semibold text-gray-700 mb-6">Your Application Journey: A Step-by-Step Guide</h3>
-                    <div class="space-y-6 border-l-2 border-gray-200 ml-3">
-                        <div class="relative pl-8">
-                            <div class="absolute -left-[7px] top-2 h-4 w-4 bg-white border-2 border-blue-600 rounded-full"></div>
-                            <h4 class="font-bold text-lg text-gray-800">Step 1: Prepare & Submit Your Documents</h4>
-                            <p class="text-gray-600">Download the application form and gather all required documents (see list below). Send them via email to the faculty coordinator at <a href="mailto:facultyofengineering@mk.uni-pannon.hu" class="text-blue-600 font-medium hover:underline">facultyofengineering@mk.uni-pannon.hu</a>.</p>
-                             <div class="mt-4">
-                                <a href="https://felveteli.mk.uni-pannon.hu/images/dokumentumok/felveteli/application/application_form_UP%201.docx" class="inline-block bg-blue-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors shadow">Download Application Form</a>
-                             </div>
-                        </div>
-                        <div class="relative pl-8">
-                            <div class="absolute -left-[7px] top-2 h-4 w-4 bg-white border-2 border-blue-600 rounded-full"></div>
-                            <h4 class="font-bold text-lg text-gray-800">Step 2: Await Confirmation</h4>
-                            <p class="text-gray-600">The faculty will review your documents to ensure you meet the entry requirements. <strong class="text-red-600">Do not pay the application fee until you receive confirmation from the faculty.</strong></p>
-                        </div>
-                         <div class="relative pl-8">
-                            <div class="absolute -left-[7px] top-2 h-4 w-4 bg-white border-2 border-blue-600 rounded-full"></div>
-                            <h4 class="font-bold text-lg text-gray-800">Step 3: Pay Application Fee</h4>
-                            <p class="text-gray-600">Once confirmed, transfer the non-refundable 150 EUR application fee. Send proof of payment to the coordinator. Deadlines: 30th April (Autumn) or 15th October (Spring).</p>
-                        </div>
-                        <div class="relative pl-8">
-                            <div class="absolute -left-[7px] top-2 h-4 w-4 bg-white border-2 border-blue-600 rounded-full"></div>
-                            <h4 class="font-bold text-lg text-gray-800">Step 4: Online Entrance Exam</h4>
-                            <p class="text-gray-600">Participate in the online entrance exam organised by the Faculty. You will receive details via email.</p>
-                        </div>
-                        <div class="relative pl-8">
-                            <div class="absolute -left-[7px] top-2 h-4 w-4 bg-white border-2 border-green-600 rounded-full"></div>
-                            <h4 class="font-bold text-lg text-gray-800">Step 5: Secure Your Place (Successful Applicants)</h4>
-                            <p class="text-gray-600">Upon successful admission, you must transfer the tuition fee for the first two semesters. If you require dormitory accommodation, a 300 EUR deposit must also be paid at this time.</p>
-                        </div>
-                         <div class="relative pl-8">
-                            <div class="absolute -left-[7px] top-2 h-4 w-4 bg-white border-2 border-green-600 rounded-full"></div>
-                            <h4 class="font-bold text-lg text-gray-800">Step 6: Enrolment</h4>
-                            <p class="text-gray-600">Complete your enrolment in person during registration week (the first week of the semester). You must present all your original documents at this time.</p>
+                        <div class="rounded-2xl border border-emerald-200/70 bg-emerald-50/70 p-6">
+                            <h3 class="text-lg font-semibold text-emerald-800 flex items-center gap-2"><i class="fa-solid fa-seedling"></i> Spring Semester Intake</h3>
+                            <p class="text-slate-600 mt-2">Application Period:</p>
+                            <p class="text-2xl font-semibold text-slate-900">15th Aug – 15th Oct</p>
                         </div>
                     </div>
-                </section>
-                
-                <!-- Scholarship Section -->
-                <section id="scholarships" class="mb-12 bg-white p-8 rounded-xl shadow-md">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">Scholarship Opportunities</h2>
-                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg flex flex-col md:flex-row items-start md:items-center gap-6">
-                        <div class="flex-shrink-0">
-                            
+
+                    <h3 class="text-xl font-semibold text-slate-700 mb-6">Your Application Journey: A Step-by-Step Guide</h3>
+                    <div class="relative pl-2 timeline space-y-6">
+                        <div class="timeline-step">
+                            <h4 class="font-semibold text-lg text-slate-900">Step 1: Prepare &amp; Submit Your Documents</h4>
+                            <p class="text-slate-600 mt-2">Download the application form and gather the required documents (see the checklist below). Email your complete package to the faculty coordinator at <a href="mailto:facultyofengineering@mk.uni-pannon.hu" class="text-sky-600 font-medium hover:underline">facultyofengineering@mk.uni-pannon.hu</a>.</p>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-xl text-yellow-800">Stipendium Hungaricum Scholarship</h3>
-                            <p class="text-gray-700 mt-1">This is a separate application process managed by the Hungarian government. The application period is typically <strong class="font-semibold">15th November - 15th January</strong>.</p>
-                             <a href="https://stipendiumhungaricum.hu/apply/" target="_blank" class="inline-block mt-4 bg-yellow-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-yellow-600 transition-colors shadow">Visit Stipendium Hungaricum Website</a>
+                        <div class="timeline-step">
+                            <h4 class="font-semibold text-lg text-slate-900">Step 2: Await Confirmation</h4>
+                            <p class="text-slate-600 mt-2">The faculty reviews your documents and confirms whether you meet the entry requirements. <strong class="text-rose-600">Do not pay the application fee until you receive approval.</strong></p>
+                        </div>
+                        <div class="timeline-step">
+                            <h4 class="font-semibold text-lg text-slate-900">Step 3: Pay Application Fee</h4>
+                            <p class="text-slate-600 mt-2">After approval, transfer the non-refundable 150 EUR application fee and email the proof of payment to the coordinator. Deadlines: 30th April (Autumn intake) or 15th October (Spring intake).</p>
+                        </div>
+                        <div class="timeline-step">
+                            <h4 class="font-semibold text-lg text-slate-900">Step 4: Online Entrance Exam</h4>
+                            <p class="text-slate-600 mt-2">Participate in the online entrance exam organized by the faculty. You will receive the technical details and schedule via email.</p>
+                        </div>
+                        <div class="timeline-step success">
+                            <h4 class="font-semibold text-lg text-slate-900">Step 5: Secure Your Place (Successful Applicants)</h4>
+                            <p class="text-slate-600 mt-2">If you pass the admission process, pay the tuition fees for the first two semesters. If you request dormitory accommodation, also transfer the 300 EUR deposit.</p>
+                        </div>
+                        <div class="timeline-step success">
+                            <h4 class="font-semibold text-lg text-slate-900">Step 6: Enrolment</h4>
+                            <p class="text-slate-600 mt-2">Arrive in person during the registration week (the first week of the semester) and present your original documents for verification.</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- Documents Section -->
-                <section id="documents" class="mb-12 bg-white p-8 rounded-xl shadow-md">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">Required Documents Checklist</h2>
+                <section id="scholarships" class="glass-card section-card" style="--accent-color: var(--accent-amber);">
+                    <h2>Scholarship Opportunities</h2>
+                    <p class="text-slate-600 leading-relaxed mb-8">Explore the available scholarship options. Some scholarships follow a separate application process, so pay close attention to their respective deadlines.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="rounded-2xl border border-amber-200/70 bg-amber-50/70 p-6">
+                            <h3 class="text-xl font-semibold text-amber-800 flex items-center gap-2"><i class="fa-solid fa-globe"></i> Self-Funded Applicants</h3>
+                            <p class="text-slate-600 mt-3">Self-funded applicants are responsible for covering the full tuition fee. Make sure you have adequate financial resources for the duration of your studies.</p>
+                        </div>
+                        <div class="rounded-2xl border border-yellow-300/70 bg-yellow-50/70 p-6">
+                            <h3 class="text-xl font-semibold text-yellow-800 flex items-center gap-2"><i class="fa-solid fa-award"></i> Stipendium Hungaricum Scholarship</h3>
+                            <p class="text-slate-600 mt-3">This is a separate application process coordinated by the Hungarian Government. The application window is typically <strong class="font-semibold">15th November – 15th January</strong>.</p>
+                            <a href="https://stipendiumhungaricum.hu/apply/" target="_blank" class="inline-flex items-center gap-2 mt-4 text-yellow-700 font-semibold hover:text-yellow-800">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                Visit Stipendium Hungaricum Website
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="documents" class="glass-card section-card" style="--accent-color: var(--accent-green);">
+                    <h2>Required Documents Checklist</h2>
+                    <p class="text-slate-600 leading-relaxed mb-6">Prepare the following documents for your application. Double-check that every item is included before you submit your package.</p>
                     <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">Completed Application Form</strong> - Request from the faculty coordinator.</span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                            <span><strong class="text-slate-900">Completed Application Form</strong> - Request from the faculty coordinator.</span>
                         </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">High School/University Degree</strong> - Copy with official English translation.</span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                            <span><strong class="text-slate-900">High School/University Degree</strong> - Copy with official English translation.</span>
                         </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">Transcript of Records</strong> - Copy of previous studies with official English translation.</span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                            <span><strong class="text-slate-900">Transcript of Records</strong> - Copy of previous studies with official English translation.</span>
                         </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">Proof of English Proficiency</strong> - TOEFL (min. 60), IELTS (min. 5.5), or an Attestation if previous studies were in English.</span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                            <span><strong class="text-slate-900">Proof of English Proficiency</strong> - TOEFL (min. 60), IELTS (min. 5.5), or an Attestation if previous studies were in English.</span>
                         </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">Passport/ID Card</strong> - Copy of a valid passport, or a valid ID/driving licence for EU citizens.</span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                            <span><strong class="text-slate-900">Passport/ID Card</strong> - Copy of a valid passport, or a valid ID/driving licence for EU citizens.</span>
                         </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">CV in English.</strong></span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                            <span><strong class="text-slate-900">CV in English.</strong></span>
                         </li>
-                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">Motivation Letter in English</strong> - Maximum 3000 characters.</span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                            <span><strong class="text-slate-900">Motivation Letter in English</strong> - Maximum 3000 characters.</span>
                         </li>
-                         <li class="flex items-start">
-                             <svg class="w-6 h-6 text-gray-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span><strong class="text-gray-800">Letters of Recommendation (Optional)</strong> - Submitting these is an advantage.</span>
+                        <li class="flex items-start gap-4">
+                            <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-500"><i class="fa-solid fa-circle-info"></i></span>
+                            <span><strong class="text-slate-900">Letters of Recommendation (Optional)</strong> - Submitting these is an advantage.</span>
                         </li>
                     </ul>
                 </section>
-                
-                 <!-- Fees Section -->
-                <section id="fees" class="mb-12 bg-white p-8 rounded-xl shadow-md">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">Fees & Payment Details</h2>
-                    <div class="bg-gray-50 p-6 rounded-lg border">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-4">Application Fee: 150 EUR</h3>
-                        <p class="text-gray-600 mb-6">This fee is non-refundable and covers the cost of the admission procedure. It must be paid by the application deadline, but only after the faculty confirms you meet the entry requirements.</p>
-                        
-                        <h4 class="font-bold text-md text-gray-700 mb-4">Bank Transfer Information:</h4>
-                        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+
+                <section id="fees" class="glass-card section-card" style="--accent-color: var(--accent-blue);">
+                    <h2>Fees &amp; Payment Details</h2>
+                    <p class="text-slate-600 leading-relaxed mb-6">Review the fees associated with your application and the bank transfer information required to complete payment.</p>
+                    <div class="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-6">
+                        <h3 class="font-semibold text-lg text-slate-900 mb-2">Application Fee: 150 EUR</h3>
+                        <p class="text-slate-600 mb-6">This fee is non-refundable and covers the cost of the admission procedure. It must be paid by the application deadline, but only after the faculty confirms you meet the entry requirements.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Payable to</dt>
-                                <dd class="mt-1 text-gray-900 font-semibold">Pannon Egyetem</dd>
-                            </div>
-                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Bank's Name</dt>
-                                <dd class="mt-1 text-gray-900 font-semibold">MBH Bank Nyrt</dd>
+                                <span class="text-sm font-medium text-slate-500">Payable to</span>
+                                <p class="mt-1 text-slate-900 font-semibold">University of Pannonia</p>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Address</dt>
-                                <dd class="mt-1 text-gray-900">8200 Veszprém, Egyetem utca 10., Hungary</dd>
+                                <span class="text-sm font-medium text-slate-500">Bank's Name</span>
+                                <p class="mt-1 text-slate-900 font-semibold">MBH Bank Nyrt</p>
                             </div>
-                             <div>
-                                <dt class="text-sm font-medium text-gray-500">SWIFT Code</dt>
-                                <dd class="mt-1 text-gray-900 font-mono">MKKBHUHB</dd>
+                            <div>
+                                <span class="text-sm font-medium text-slate-500">Address</span>
+                                <p class="mt-1 text-slate-900">8200 Veszprém, Egyetem utca 10., Hungary</p>
                             </div>
-                             <div class="sm:col-span-2">
-                                <dt class="text-sm font-medium text-gray-500">IBAN (International Bank Account Number)</dt>
-                                <dd class="mt-1 text-gray-900 font-mono text-lg">HU77 10300002 10802153 00054883</dd>
+                            <div>
+                                <span class="text-sm font-medium text-slate-500">SWIFT Code</span>
+                                <p class="mt-1 text-slate-900 font-mono">MKKBHUHB</p>
                             </div>
-                        </dl>
-                        <div class="mt-6 bg-blue-100 border-l-4 border-blue-500 p-4 rounded-r-lg">
-                            <h5 class="font-bold text-blue-800">Crucial: Transfer Note/Reference</h5>
-                            <p class="text-blue-700">You must include the following in the note/reference field of your bank transfer:</p>
-                            <p class="mt-2 font-mono bg-white p-2 rounded inline-block">FE_Your Name_registration fee</p>
-                            <p class="text-blue-700 text-sm mt-1">(e.g., FE_Adam Smith_registration fee)</p>
+                            <div class="sm:col-span-2">
+                                <span class="text-sm font-medium text-slate-500">IBAN (International Bank Account Number)</span>
+                                <p class="mt-1 text-slate-900 font-mono text-lg">HU77 10300002 10802153 00054883</p>
+                            </div>
                         </div>
-                    </div>
-                </section>
-                
-                <!-- Rules Section -->
-                <section id="rules" class="mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Important Rules & Deadlines</h2>
-                    <div class="space-y-4">
-                        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-                            <h3 class="font-bold text-red-800">Document Corrections</h3>
-                            <p class="text-red-700">If you are asked to correct a document, you have 8 days to do so. Failure to correct it within the deadline will result in your application being rejected.</p>
-                        </div>
-                        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-                            <h3 class="font-bold text-red-800">Missing Documents</h3>
-                            <p class="text-red-700">Proof of qualification documents can be submitted later, but must be received by 15th July (Autumn) or 10th December (Spring). Applications without these documents after the deadline will be rejected.</p>
-                        </div>
-                        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-                            <h3 class="font-bold text-red-800">Tuition Fee Payment</h3>
-                            <p class="text-red-700">The tuition fee must be paid within 15 days of receiving the Notification Letter, and no later than 10th July (Autumn) or 1st December (Spring). Failure to pay will result in rejection.</p>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- General Info Section -->
-                <section id="general-info" class="mb-12 bg-white p-8 rounded-xl shadow-md">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">General Information</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="font-semibold text-lg text-gray-700 mb-2">Academic Year</h3>
-                            <p class="text-gray-600">The academic year has two semesters. The Fall semester begins in early September, and the Spring semester begins in early February. Each semester is 14 weeks long, followed by a 6-week examination period.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-lg text-gray-700 mb-2">Accommodation</h3>
-                            <p class="text-gray-600">Full-time students in Veszprém can apply for accommodation in university dormitories. For more information, visit the official website.</p>
-                            <a href="https://kollegiumok.uni-pannon.hu/en/" target="_blank" class="text-blue-600 font-medium hover:underline mt-2 inline-block">Dormitory Information</a>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-lg text-gray-700 mb-2">Visa & Refunds</h3>
-                            <p class="text-gray-600">If your study visa application is rejected, pre-paid tuition and accommodation fees will be refunded if you cancel before the term begins.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-lg text-gray-700 mb-2">Postponing Studies</h3>
-                            <p class="text-gray-600">Admitted students may request to postpone the start of their studies for up to one year, subject to faculty approval.</p>
-                        </div>
-                        <div class="md:col-span-2">
-                             <h3 class="font-semibold text-lg text-gray-700 mb-2">Programme Information</h3>
-                            <p class="text-gray-600">You can find detailed information about our academic programmes, prerequisites, and credit requirements on the faculty website.</p>
-                            <a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes" target="_blank" class="text-blue-600 font-medium hover:underline mt-2 inline-block">View Academic Programmes</a>
+                        <div class="mt-6 rounded-2xl border border-sky-200/70 bg-sky-50/70 p-5">
+                            <h4 class="font-semibold text-sky-700">Crucial: Transfer Note/Reference</h4>
+                            <p class="text-sky-700 text-sm mt-2">Remember to include the following reference in the bank transfer note:</p>
+                            <p class="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-mono text-sm text-sky-700 shadow-sm">FE_Your Name_registration fee</p>
+                            <p class="text-sky-600 text-xs mt-2">(e.g., FE_Adam Smith_registration fee)</p>
                         </div>
                     </div>
                 </section>
 
+                <section id="rules" class="glass-card section-card" style="--accent-color: var(--accent-rose);">
+                    <h2>Important Rules &amp; Deadlines</h2>
+                    <div class="space-y-4 text-slate-600">
+                        <div class="rounded-2xl border border-rose-200/70 bg-rose-50/70 p-5">
+                            <h3 class="text-lg font-semibold text-rose-700 flex items-center gap-2"><i class="fa-solid fa-file-circle-exclamation"></i> Document Corrections</h3>
+                            <p class="mt-2">If you are asked to correct a document, you have 8 days to do so. Failure to correct it within the deadline will result in your application being rejected.</p>
+                        </div>
+                        <div class="rounded-2xl border border-rose-200/70 bg-rose-50/70 p-5">
+                            <h3 class="text-lg font-semibold text-rose-700 flex items-center gap-2"><i class="fa-solid fa-clock"></i> Payment Deadline</h3>
+                            <p class="mt-2">The application fee must be transferred by <strong>30th April</strong> (Autumn Intake) or <strong>15th October</strong> (Spring Intake) at the latest.</p>
+                        </div>
+                        <div class="rounded-2xl border border-rose-200/70 bg-rose-50/70 p-5">
+                            <h3 class="text-lg font-semibold text-rose-700 flex items-center gap-2"><i class="fa-solid fa-passport"></i> Visa Process</h3>
+                            <p class="mt-2">Successful applicants should initiate visa procedures immediately after receiving the acceptance letter to ensure timely arrival in Hungary.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="general-info" class="glass-card section-card" style="--accent-color: var(--accent-green);">
+                    <h2>General Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-600">
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-envelope"></i> Official Communication</h3>
+                            <p>Official communication takes place via email. Make sure you regularly check your inbox (and spam folder) for updates.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-calendar-alt"></i> Academic Year</h3>
+                            <p>The academic year has two semesters. The Fall semester begins in early September, and the Spring semester begins in early February. Each semester is 14 weeks long, followed by a 6-week examination period.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-user-graduate"></i> Entrance Requirements</h3>
+                            <p>Some programmes may require additional documents or interviews. Always follow the specific instructions provided by the faculty.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-house"></i> Accommodation</h3>
+                            <p>Full-time students in Veszprém can apply for accommodation in university dormitories. For more information, visit the official website.</p>
+                            <a href="https://kollegiumok.uni-pannon.hu/en/" target="_blank" class="inline-flex items-center gap-2 text-sky-600 font-semibold hover:text-sky-700"><i class="fa-solid fa-arrow-up-right-from-square"></i>Dormitory Information</a>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-passport"></i> Visa &amp; Refunds</h3>
+                            <p>If your study visa application is rejected, pre-paid tuition and accommodation fees will be refunded if you cancel before the term begins.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-hourglass-half"></i> Postponing Studies</h3>
+                            <p>Admitted students may request to postpone the start of their studies for up to one year, subject to faculty approval.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-map-location-dot"></i> Living in Veszprém</h3>
+                            <p>Veszprém offers a vibrant student life with easy access to Lake Balaton. Our international office provides guidance on settling in and everyday practicalities.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200/70 bg-white/70 p-6 space-y-3">
+                            <h3 class="text-lg font-semibold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-book-open"></i> Programme Information</h3>
+                            <p>You can find detailed information about our academic programmes, prerequisites, and credit requirements on the faculty website.</p>
+                            <a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes" target="_blank" class="inline-flex items-center gap-2 text-sky-600 font-semibold hover:text-sky-700"><i class="fa-solid fa-arrow-up-right-from-square"></i>View Academic Programmes</a>
+                        </div>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
-    
+
     <script>
-        // Simple scroll spy to highlight nav links on scroll
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('aside nav a');
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(link => {
-                        link.classList.remove('scroll-spy-active');
-                        if (link.getAttribute('href').substring(1) === entry.target.id) {
-                            link.classList.add('scroll-spy-active');
-                        }
-                    });
-                }
-            });
-        }, { rootMargin: '-30% 0px -70% 0px' }); // Trigger when section is in the middle 40% of the viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            const targetId = link.getAttribute('href').substring(1);
+                            link.classList.toggle('active', targetId === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
 
-        sections.forEach(section => {
-            observer.observe(section);
+            sections.forEach(section => observer.observe(section));
         });
     </script>
+
 </body>
 </html>
