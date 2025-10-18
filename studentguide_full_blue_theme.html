@@ -1,618 +1,735 @@
 <!DOCTYPE html>
-<html lang="en" style="scroll-behavior: smooth;">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Guide | University of Pannonia – Faculty of Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
     <style>
-        /* Brand & Neutrals */
-        :root{
-            --brand:#1c3864;           /* primary brand */
-            --brand-dark:#142a4a;      /* hover/press */
-            --brand-50:#eef3f9;        /* very light tint for subtle backgrounds */
-            --brand-100:#e1e9f3;       /* section separators */
-            --text:#374151;            /* gray-700 */
-            --text-strong:#111827;     /* gray-900 */
-            --muted:#6b7280;           /* gray-500 */
-            --white:#ffffff;           
-            --bg:#f9fafb;              /* keep light background */
-            --shadow:0 4px 6px rgba(0,0,0,0.1);
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(125, 211, 252, 0.35), transparent 55%),
+                radial-gradient(circle at 88% 12%, rgba(192, 132, 252, 0.28), transparent 55%),
+                radial-gradient(circle at 20% 88%, rgba(134, 239, 172, 0.35), transparent 60%),
+                linear-gradient(135deg, #f8fafc 0%, #e6f2ff 50%, #f6ecff 100%);
+            background-attachment: fixed;
+            color: #0f172a;
         }
-
-        /* Reset */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family:'Inter',sans-serif; background-color:var(--bg); color:var(--text); line-height:1.6; }
-
-        /* Layout */
-        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 1.5rem; }
-        section { padding:4rem 0; }
-        section.bg-white{ background-color:var(--white); }
-
-        /* Typography */
-        h1,h2,h3,h4{ color:var(--text-strong); }
-        a{ color:var(--brand); text-decoration:none; transition:color .3s ease; }
-        a:hover{ text-decoration:underline; color:var(--brand-dark); }
-
-        /* Header & Nav */
-        .main-header{ background-color:rgba(255,255,255,0.9); backdrop-filter:blur(10px); box-shadow:0 2px 4px rgba(0,0,0,0.08); position:sticky; top:0; z-index:50; padding:.625rem 0; }
-        .main-header .container{ display:flex; justify-content:space-between; align-items:center; }
-        .logo{ display:flex; align-items:center; font-size:1.25rem; font-weight:700; color:var(--brand); }
-        .logo-img{ height:45px; width:auto; }
-
-        /* Mobile Menu */
-        #mobile-menu{ position:absolute; top:100%; left:0; width:100%; background-color:rgba(255,255,255,0.98); backdrop-filter:blur(6px); box-shadow:0 8px 12px rgba(0,0,0,0.08); padding:1rem; border-bottom-left-radius:.5rem; border-bottom-right-radius:.5rem; }
-        .nav-links{ list-style:none; display:flex; flex-direction:column; gap:.5rem; }
-        .nav-links li a{ display:block; padding:.75rem .5rem; color:var(--text); font-weight:500; border-radius:.375rem; transition:background-color .25s ease, color .25s ease; }
-        .nav-links li a:hover{ background-color:var(--brand-50); color:var(--brand); text-decoration:none; }
-        .mobile-menu-button{ display:inline-flex; align-items:center; padding:.5rem; margin-left:.75rem; border:none; background:transparent; border-radius:.5rem; cursor:pointer; }
-        .mobile-menu-button svg{ width:1.5rem; height:1.5rem; color:var(--brand); }
-        .hidden{ display:none !important; }
-
-        /* Hero */
-        .hero{ padding-top:5rem; padding-bottom:8rem; background: linear-gradient(135deg, #fbfcfd 0%, #deeeff 85%); text-align:center; }
-        .hero h1{ font-size:2.5rem; font-weight:800; margin-bottom:1rem; color:var(--brand); }
-        #slogan-container{ position:relative; height:3.2rem; margin-bottom:3rem; overflow:hidden; }
-        .slogan{ opacity:0; position:absolute; width:100%; left:0; right:0; margin:0 auto; text-align:center; font-size:1.8rem; font-weight:700; color:var(--brand); font-family:'Playfair Display',serif; font-style:italic; }
-        .slogan.active{ opacity:1; animation:slide-cycle 3s ease-in-out forwards; }
-        .hero p{ font-size:1.125rem; max-width:48rem; margin:0 auto 2rem; }
-        .hero .button{ background-color:var(--brand); color:#fff; font-weight:700; padding:.75rem 2rem; border-radius:9999px; transition:background-color .3s ease; font-size:1.125rem; }
-        .hero .button:hover{ background-color:var(--brand-dark); text-decoration:none; }
-
-        /* Section Title */
-        .section-title-wrapper{ text-align:center; margin-bottom:2.5rem; }
-        .section-title{ font-size:2.25rem; font-weight:700; color:var(--brand); padding-bottom:.75rem; border-bottom:4px solid var(--brand); display:inline-block; margin:0; }
-
-        /* Card */
-        .card{ background-color:#fff; padding:2rem; border-radius:.5rem; box-shadow:var(--shadow); border:1px solid var(--brand-100); transition:transform .3s ease, box-shadow .3s ease; }
-        .card:hover{ transform:translateY(-4px); box-shadow:0 10px 16px rgba(0,0,0,0.12); }
-
-        /* Grid */
-        .grid{ display:grid; gap:2rem; }
-
-        /* Flex */
-        .flex-container{ display:flex; flex-direction:column; gap:3rem; align-items:center; }
-
-        /* Why Us */
-        #why-us .card h3{ font-size:1.25rem; font-weight:800; color:var(--brand); margin-bottom:.5rem; }
-
-        /* Programs Tabs */
-        .tabs-container{ max-width:56rem; margin:0 auto; }
-        .tabs-nav{ display:flex; justify-content:center; border-bottom:1px solid var(--brand-100); margin-bottom:1rem; }
-        .tab-button{ padding:1rem 2.5rem; text-align:center; border-bottom:2px solid transparent; font-weight:600; font-size:1.125rem; cursor:pointer; color:var(--muted); background:none; border:none; }
-        .tab-button.active{ border-color:var(--brand); color:var(--brand); }
-        .tab-content{ display:none; }
-        .tab-content.active{ display:block; }
-
-        .program-item{ display:flex; flex-direction:column; gap:1.5rem; align-items:center; text-align:center; }
-        .program-item img{ width:12rem; height:12rem; border-radius:.5rem; object-fit:cover; box-shadow:var(--shadow); border:1px solid var(--brand-100); }
-        .program-item h4{ font-weight:800; font-size:1.125rem; }
-        .program-item p{ margin-top:.25rem; }
-
-        /* Application & Scholarships */
-        .application-card{ background-color:#fff; padding:2rem; border-radius:.5rem; box-shadow:0 10px 15px rgba(0,0,0,0.08); border:1px solid var(--brand-100); }
-        .application-card h4{ font-weight:700; font-size:1.125rem; color:var(--text); }
-        .application-card ul{ list-style:disc; list-style-position:inside; padding-left:.5rem; margin-bottom:1rem; }
-        .button-group{ margin-top:1.5rem; display:flex; gap:1rem; }
-        .button-primary{ background-color:var(--brand); color:#fff; font-weight:700; padding:.5rem 1.5rem; border-radius:.5rem; }
-        .button-primary:hover{ background-color:var(--brand-dark); text-decoration:none; }
-        .button-secondary{ background-color:#eef2f7; color:var(--brand); font-weight:700; padding:.5rem 1.5rem; border-radius:.5rem; border:1px solid var(--brand-100); }
-        .button-secondary:hover{ background-color:#e7edf6; text-decoration:none; }
-
-        .scholarship-card{ background-color:#fff; padding:1.5rem; border-radius:.5rem; box-shadow:var(--shadow); border:1px solid var(--brand-100); }
-        .scholarship-card h4{ font-weight:800; color:var(--brand); }
-        .scholarship-card p{ font-size:.9rem; }
-        .scholarships-container{ display:flex; flex-direction:column; gap:1rem; }
-
-        /* Accommodation */
-        .accommodation-card{ border-radius:.5rem; box-shadow:0 10px 15px rgba(0,0,0,0.1); overflow:hidden; border:1px solid var(--brand-100); }
-        .accommodation-card img{ width:100%; display:block; }
-        .accommodation-card-content{ padding:1.5rem; }
-        .accommodation-card-content h3{ color:var(--brand); }
-
-        /* Accordion */
-        .accordion-item{ background:#fff; padding:1.5rem; border-radius:.5rem; box-shadow:var(--shadow); border:1px solid var(--brand-100); }
-        .accordion-button{ width:100%; display:flex; justify-content:space-between; align-items:center; text-align:left; font-size:1.25rem; font-weight:800; color:var(--brand); background:none; border:none; cursor:pointer; }
-        .accordion-button svg{ width:1.25rem; height:1.25rem; color:var(--muted); transition:transform .3s ease; }
-        .accordion-button[aria-expanded="true"] svg{ transform:rotate(180deg); color:var(--brand); }
-        .accordion-content{ overflow:hidden; transition:max-height .5s ease-out; max-height:0; margin-top:0; }
-
-        /* Image + Text sections */
-        .image-text-section img{ border-radius:.5rem; box-shadow:0 10px 15px rgba(0,0,0,0.1); width:100%; border:1px solid var(--brand-100); }
-        .image-text-section ul{ list-style:disc; list-style-position:inside; }
-
-        /* Footer */
-        .main-footer{ background-color:var(--brand); color:#fff; text-align:center; }
-        .main-footer .container{ padding:3rem 0; }
-        .main-footer h2{ font-size:1.875rem; font-weight:800; color:#fff; margin-bottom:1rem; }
-        .main-footer p{ color:#e4ecfa; margin-bottom:.5rem; }
-        .footer-contact{ font-size:1.125rem; color:#ffffff; font-weight:700; transition:opacity .2s ease; }
-        .footer-contact:hover{ opacity:.9; }
-        .footer-social-button{ display:inline-block; background-color:#ffffff; color:var(--brand); font-weight:800; padding:.5rem 1rem; border-radius:.375rem; margin-top:.5rem; border:1px solid rgba(0,0,0,0.06); }
-        .footer-social-button:hover{ background-color:#f4f7fb; text-decoration:none; }
-        .footer-bottom{ border-top:1px solid rgba(255,255,255,0.25); padding-top:1.5rem; margin-top:3rem; font-size:.9rem; color:#dbe7ff; }
-
-        /* Animation */
-        @keyframes slide-cycle{
-            0%{ transform:translateX(-100%); opacity:0; }
-            10%{ transform:translateX(0); opacity:1; }
-            90%{ transform:translateX(0); opacity:1; }
-            100%{ transform:translateX(100%); opacity:0; }
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            inset: auto;
+            width: 55vmax;
+            height: 55vmax;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: -2;
         }
-
-        /* Responsive */
-        @media (min-width:768px){
-            #mobile-menu{ position:static; display:block !important; background:none; padding:0; box-shadow:none; backdrop-filter:none; }
-            .nav-links{ flex-direction:row; gap:2rem; }
-            #mobile-nav-container{ width:auto; }
-            .mobile-menu-button{ display:none; }
-            .hero h1{ font-size:3.75rem; }
-            .hero .slogan{ font-size:2.25rem; }
-            .section-title{ font-size:2.5rem; }
-            .grid-md-cols-2{ grid-template-columns:repeat(2,1fr); }
-            .grid-md-cols-3{ grid-template-columns:repeat(3,1fr); }
-            .grid-md-cols-5{ grid-template-columns:repeat(5,1fr); }
-            .md-col-span-2{ grid-column:span 2 / span 2; }
-            .md-col-span-3{ grid-column:span 3 / span 3; }
-            .program-item{ flex-direction:row; text-align:left; align-items:flex-start; }
-            .flex-container{ flex-direction:row; }
-            .flex-container > div{ flex:1; }
-            #mobile-menu ul{ flex-direction:row; margin:0; gap:2rem; }
+        body::before {
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.45), transparent 70%);
+            top: -22vmax;
+            right: -12vmax;
+        }
+        body::after {
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.38), transparent 72%);
+            bottom: -28vmax;
+            left: -8vmax;
+        }
+        :root {
+            --brand-color: #1c3864;
+            --brand-dark: #142a4a;
+            --accent-soft: rgba(148, 197, 255, 0.7);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            backdrop-filter: blur(22px);
+            box-shadow: 0 25px 45px rgba(15, 23, 42, 0.12);
+            color: #0f172a;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            backdrop-filter: blur(28px);
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.45), rgba(148, 163, 184, 0.15), rgba(255, 255, 255, 0));
+            opacity: 0.75;
+            pointer-events: none;
+        }
+        .glass-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            transition: all 0.2s ease-in-out;
+            color: rgba(15, 23, 42, 0.7);
+            border-left: 4px solid transparent;
+        }
+        .nav-link i {
+            width: 1.5rem;
+        }
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(148, 163, 184, 0.28);
+            border-left-color: rgba(56, 189, 248, 0.75);
+            color: #0f172a;
+            font-weight: 600;
+            transform: translateX(6px);
+        }
+        .section-title {
+            background: linear-gradient(120deg, #38bdf8, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: clamp(2rem, 2.6vw, 2.75rem);
+            font-weight: 800;
+            letter-spacing: 0.015em;
+        }
+        .section-subtitle {
+            color: rgba(15, 23, 42, 0.65);
+        }
+        .primary-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(186, 230, 253, 0.55), rgba(125, 211, 252, 0.65), rgba(165, 180, 252, 0.6));
+            color: #0f172a;
+            font-weight: 700;
+            border-radius: 9999px;
+            padding: 0.75rem 2rem;
+            box-shadow: 0 20px 35px rgba(148, 163, 184, 0.3);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            backdrop-filter: blur(18px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .primary-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.55), transparent 55%);
+            mix-blend-mode: screen;
+            opacity: 0.65;
+            pointer-events: none;
+        }
+        .primary-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 24px 42px rgba(148, 163, 184, 0.35);
+        }
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.6rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            background: rgba(255, 255, 255, 0.85);
+            color: #1c3864;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        .secondary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 30px rgba(148, 163, 184, 0.28);
+        }
+        .feature-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            backdrop-filter: blur(20px);
+            border-radius: 18px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(148, 163, 184, 0.25);
+        }
+        .tabs {
+            --tab-accent: rgba(148, 197, 255, 0.7);
+        }
+        .tab-btn {
+            border-radius: 9999px;
+            padding: 0.75rem 1.75rem;
+            transition: all 0.3s ease;
+            color: rgba(15, 23, 42, 0.65);
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+        }
+        .tab-btn.active {
+            color: #0f172a;
+            background: linear-gradient(135deg,
+                color-mix(in srgb, var(--tab-accent) 65%, rgba(255, 255, 255, 0)),
+                color-mix(in srgb, var(--tab-accent) 92%, rgba(15, 23, 42, 0.08))
+            );
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: 0 14px 26px rgba(148, 163, 184, 0.28);
+        }
+        .tab-btn:not(.active):hover {
+            color: rgba(15, 23, 42, 0.9);
+            transform: translateY(-1px);
+            background: rgba(148, 163, 184, 0.18);
+            border-color: rgba(148, 163, 184, 0.25);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .program-image {
+            width: 12rem;
+            height: 12rem;
+            border-radius: 1.1rem;
+            object-fit: cover;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: 0 30px 45px rgba(15, 23, 42, 0.18);
+        }
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.78);
+            border-radius: 18px;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 24px 45px rgba(15, 23, 42, 0.18);
+            padding: 1.5rem;
+        }
+        .accordion-button {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1c3864;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .accordion-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            max-height: 0;
+            margin-top: 0;
+        }
+        .hero-card {
+            border-radius: 28px;
+            padding: clamp(2.5rem, 4vw, 4rem);
+            text-align: center;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--brand-color);
+            margin-bottom: 1.5rem;
+        }
+        #slogan-container {
+            position: relative;
+            height: 3.2rem;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+        .slogan {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            text-align: center;
+            font-size: clamp(1.35rem, 2.8vw, 2.1rem);
+            font-weight: 700;
+            color: var(--brand-color);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        .slogan.active {
+            opacity: 1;
+            animation: slide-cycle 3s ease-in-out forwards;
+        }
+        @keyframes slide-cycle {
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { transform: translateX(0); opacity: 1; }
+            90% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+        @media (max-width: 767px) {
+            .mobile-nav-card {
+                border-radius: 20px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Header & Navigation -->
-    <header class="main-header">
-        <nav class="container">
-            <a href="https://felveteli.mk.uni-pannon.hu/index.php/en/" class="logo">
-                <img src="https://targygraf.mk.uni-pannon.hu/images/docman-files/logo/mk_logo_kek.png" alt="Pannonia Engineering Logo" class="logo-img">
+    <header class="glass-panel md:hidden fixed top-0 inset-x-0 z-50 mobile-nav-card">
+        <nav class="flex items-center justify-between px-5 py-4">
+            <a href="https://felveteli.mk.uni-pannon.hu/index.php/en/" class="flex items-center gap-3 font-semibold text-lg text-[color:var(--brand-color)]">
+                <img src="https://targygraf.mk.uni-pannon.hu/images/docman-files/logo/mk_logo_kek.png" alt="Pannonia Engineering Logo" class="h-10 w-auto">
+                Faculty of Engineering
             </a>
-            <div id="mobile-nav-container">
-                 <button data-collapse-toggle="mobile-menu" type="button" class="mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                </button>
-                <div class="hidden" id="mobile-menu">
-                    <ul class="nav-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#why-us">Why Us?</a></li>
-                        <li><a href="#programs">Programs</a></li>
-                        <li><a href="#apply">Apply</a></li>
-                        <li><a href="#current-students">For Current Students</a></li>
-                        <li><a href="#student-life">Student Life</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
+            <button data-collapse-toggle="mobile-menu" type="button" class="inline-flex items-center justify-center rounded-xl border border-slate-200/60 bg-white/70 px-3 py-2 text-[color:var(--brand-color)]" aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <i class="fas fa-bars text-xl"></i>
+            </button>
         </nav>
+        <div id="mobile-menu" class="hidden px-5 pb-5">
+            <ul class="flex flex-col gap-2">
+                <li><a class="nav-link active" href="#home"><i class="fas fa-house"></i>Home</a></li>
+                <li><a class="nav-link" href="#why-us"><i class="fas fa-star"></i>Why Us?</a></li>
+                <li><a class="nav-link" href="#programs"><i class="fas fa-graduation-cap"></i>Programs</a></li>
+                <li><a class="nav-link" href="#apply"><i class="fas fa-file-pen"></i>Apply</a></li>
+                <li><a class="nav-link" href="#current-students"><i class="fas fa-users"></i>For Current Students</a></li>
+                <li><a class="nav-link" href="#student-life"><i class="fas fa-heart"></i>Student Life</a></li>
+                <li><a class="nav-link" href="#veszprem"><i class="fas fa-city"></i>Veszprém</a></li>
+                <li><a class="nav-link" href="#contact"><i class="fas fa-envelope"></i>Contact</a></li>
+            </ul>
+        </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>Welcome to the Faculty of Engineering!</h1>
-                <div id="slogan-container">
-                    <p class="slogan">Innovation & Practical Excellence</p>
-                    <p class="slogan">Engineering Tomorrow, Today</p>
-                    <p class="slogan">Where Ideas Become Innovation</p>
-                    <p class="slogan">Your Global Journey Starts Here</p>
-                    <p class="slogan">Small Classes. Big Global Dreams.</p>
-                    <p class="slogan">Engineering Tomorrow, Today</p>
-                    <p class="slogan">Where Ideas Become Innovation</p>
-                    <p class="slogan">Crafting Solutions, Shaping Futures</p>
-                    <p class="slogan">From Concept to Creation</p>
-                    <p class="slogan">Not Just a Code—Your Future</p>
-                    <p class="slogan">Small Groups, Big Impact</p>
-                    <p class="slogan">Your Degree, Your Pathway to Success</p>
-                    <p class="slogan">Building Engineers, Building Careers</p>
-                    <p class="slogan">Research for a Sustainable Future</p>
-                    <p class="slogan">Innovate, Integrate, Impact</p>
-                    <p class="slogan">Engineering Change, Empowering Tomorrow</p>
-                    <p class="slogan">Engineering Minds, Global Impact</p>
-                    <p class="slogan">Join the Engineering Revolution</p>
-                    <p class="slogan">Collaborate, Create, Conquer</p>
-                    <p class="slogan">Where Engineering Meets the World</p>
-                    <p class="slogan">Study Engineering. Speak Innovation. Live Europe.</p>
-                    <p class="slogan">From Every Nation, Towards Innovation</p>
-                    <p class="slogan">A World-Class Degree in the Heart of Europe</p>
-                    <p class="slogan">Your Global Journey Starts Here</p>
-                    <p class="slogan">Engineering Your Future, Abroad</p>
-                    <p class="slogan">Come as a Student, Leave as a Global Engineer</p>
-                    <p class="slogan">Internationally Connected, Locally Grounded</p>
-                    <p class="slogan">Practical Engineering, International Impact</p>
-                    <p class="slogan">Learn Locally, Work Globally</p>
-                    <p class="slogan">Where Learning Meets Global Careers</p>
-                    <p class="slogan">Skills for the World, Built in Hungary</p>
-                    <p class="slogan">Small Classes. Big Global Dreams.</p>
-                    <p class="slogan">A Community that Engineers Success</p>
-                    <p class="slogan">Global Minds, Personal Mentorship</p>
-                </div>
-                <p>Join a vibrant international community in Veszprém, Hungary. Our faculty, the university's oldest, offers dynamic, practice-oriented programs with a commitment to sustainability and innovation.</p>
-                <a href="#programs" class="button">Explore Our Programs</a>
+    <div class="relative flex">
+        <aside class="glass-panel hidden md:block fixed top-0 left-0 h-full w-[240px] lg:w-[280px] p-6 lg:p-8 overflow-y-auto rounded-r-3xl">
+            <div class="mb-8">
+                <span class="inline-flex items-center gap-2 rounded-full bg-sky-100/70 px-4 py-1 text-sm font-semibold text-slate-700"><i class="fas fa-university"></i> University of Pannonia</span>
+                <h2 class="mt-4 text-2xl font-bold text-slate-900">Student Guide</h2>
+                <p class="text-sm text-slate-500">Faculty of Engineering</p>
             </div>
-        </section>
+            <nav class="space-y-2">
+                <a class="nav-link active" href="#home"><i class="fas fa-house"></i>Home</a>
+                <a class="nav-link" href="#why-us"><i class="fas fa-star"></i>Why Us?</a>
+                <a class="nav-link" href="#programs"><i class="fas fa-graduation-cap"></i>Programs</a>
+                <a class="nav-link" href="#apply"><i class="fas fa-file-pen"></i>Apply</a>
+                <a class="nav-link" href="#current-students"><i class="fas fa-users"></i>For Current Students</a>
+                <a class="nav-link" href="#student-life"><i class="fas fa-heart"></i>Student Life</a>
+                <a class="nav-link" href="#veszprem"><i class="fas fa-city"></i>Veszprém</a>
+                <a class="nav-link" href="#contact"><i class="fas fa-envelope"></i>Contact</a>
+            </nav>
+        </aside>
 
-        <!-- Intro Section -->
-        <section class="bg-white">
-            <div class="container flex-container">
-                <div>
-                    <h2>Our Mission & Vision</h2>
-                    <p style="margin-top: 1rem;">Our objective is to explore new areas of science while maintaining the conventional values of engineering education and upholding the highest national and international academic standards. Our mission is to educate students with an extensive understanding of their courses and crucial transferable skills and traits that will help them succeed in the workplace. We aim to deliver courses that meet the needs of industry and play a crucial role in creating a generation of engineers who will lead the development of innovative and sustainable technologies. </p>
-                    <p style="margin-top: 1rem;">The undergraduate programme of the Faculty provides excellent professional education in the following areas: water operation engineering , environmental sciences, and environmental engineering. Master's courses are taught in six major subject areas: materials engineering, environmental engineering, chemical engineering, chemistry, and environmental sciences. The Faculty welcomes applicants for PhD programs in a range of disciplines in the Doctoral School of Chemistry and Environmental Sciences and the Doctoral School of Chemical Engineering and Materials Science.</p>
-                    <p style="margin-top: 1rem;">The Faculty of Engineering provides a solid academic and practice-oriented education. Our aim is not just to discuss sustainability, but to make it widely accessible through innovative solutions that can be applied in practice, both at the regional and global levels. The Faculty of Engineering has a long tradition of hosting and supporting international students. Therefore, we aim to offer you the best international experience possible. </p>
-                </div>
-                <div>
-                    <img src="https://uni-pannon.hu/images/_Z2A0929.jpg" alt="Students collaborating in a modern engineering lab" style="border-radius: 0.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1); width: 100%; border:1px solid var(--brand-100);">
-                </div>
-            </div>
-        </section>
+        <main class="w-full md:ml-[240px] lg:ml-[280px] px-4 sm:px-8 lg:px-12 pt-28 md:pt-12 pb-20">
+            <div class="mx-auto flex max-w-6xl flex-col gap-12">
+                <section id="home" class="glass-card hero-card">
+                    <div class="mx-auto max-w-4xl">
+                        <h1 class="hero-title">Welcome to the Faculty of Engineering!</h1>
+                        <div id="slogan-container">
+                            <p class="slogan">Innovation & Practical Excellence</p>
+                            <p class="slogan">Engineering Tomorrow, Today</p>
+                            <p class="slogan">Where Ideas Become Innovation</p>
+                            <p class="slogan">Your Global Journey Starts Here</p>
+                            <p class="slogan">Small Classes. Big Global Dreams.</p>
+                            <p class="slogan">Engineering Tomorrow, Today</p>
+                            <p class="slogan">Where Ideas Become Innovation</p>
+                            <p class="slogan">Crafting Solutions, Shaping Futures</p>
+                            <p class="slogan">From Concept to Creation</p>
+                            <p class="slogan">Not Just a Code—Your Future</p>
+                            <p class="slogan">Small Groups, Big Impact</p>
+                            <p class="slogan">Your Degree, Your Pathway to Success</p>
+                            <p class="slogan">Building Engineers, Building Careers</p>
+                            <p class="slogan">Research for a Sustainable Future</p>
+                            <p class="slogan">Innovate, Integrate, Impact</p>
+                            <p class="slogan">Engineering Change, Empowering Tomorrow</p>
+                            <p class="slogan">Engineering Minds, Global Impact</p>
+                            <p class="slogan">Join the Engineering Revolution</p>
+                            <p class="slogan">Collaborate, Create, Conquer</p>
+                            <p class="slogan">Where Engineering Meets the World</p>
+                            <p class="slogan">Study Engineering. Speak Innovation. Live Europe.</p>
+                            <p class="slogan">From Every Nation, Towards Innovation</p>
+                            <p class="slogan">A World-Class Degree in the Heart of Europe</p>
+                            <p class="slogan">Your Global Journey Starts Here</p>
+                            <p class="slogan">Engineering Your Future, Abroad</p>
+                            <p class="slogan">Come as a Student, Leave as a Global Engineer</p>
+                            <p class="slogan">Internationally Connected, Locally Grounded</p>
+                            <p class="slogan">Practical Engineering, International Impact</p>
+                            <p class="slogan">Learn Locally, Work Globally</p>
+                            <p class="slogan">Where Learning Meets Global Careers</p>
+                            <p class="slogan">Skills for the World, Built in Hungary</p>
+                            <p class="slogan">Small Classes. Big Global Dreams.</p>
+                            <p class="slogan">A Community that Engineers Success</p>
+                            <p class="slogan">Global Minds, Personal Mentorship</p>
+                        </div>
+                        <p class="mx-auto mb-6 max-w-3xl text-lg text-slate-600">Join a vibrant international community in Veszprém, Hungary. Our faculty, the university's oldest, offers dynamic, practice-oriented programs with a commitment to sustainability and innovation.</p>
+                        <a href="#programs" class="primary-btn">Explore Our Programs</a>
+                    </div>
+                </section>
 
-        <!-- Why Choose Us Section -->
-        <section id="why-us">
-            <div class="container">
-                <div class="section-title-wrapper"><h2 class="section-title">Why Choose Us?</h2></div>
-                <div class="grid grid-md-cols-3">
-                    <div class="card">
-                        <h3>Internationally Recognised Diploma (IChemE)</h3>
-                        <p>Our chemical engineering programs (BSc and MSc) are accredited by the Institution of Chemical Engineers, ensuring your degree is accepted in the Commonwealth countries and the USA.</p>
+                <section class="glass-card p-8 md:p-12" id="mission">
+                    <div class="grid gap-8 lg:grid-cols-[1.2fr,1fr] lg:items-center">
+                        <div class="space-y-6 text-slate-700">
+                            <h2 class="section-title">Our Mission & Vision</h2>
+                            <p>Our objective is to explore new areas of science while maintaining the conventional values of engineering education and upholding the highest national and international academic standards. Our mission is to educate students with an extensive understanding of their courses and crucial transferable skills and traits that will help them succeed in the workplace. We aim to deliver courses that meet the needs of industry and play a crucial role in creating a generation of engineers who will lead the development of innovative and sustainable technologies.</p>
+                            <p>The undergraduate programme of the Faculty provides excellent professional education in the following areas: water operation engineering , environmental sciences, and environmental engineering. Master's courses are taught in six major subject areas: materials engineering, environmental engineering, chemical engineering, chemistry, and environmental sciences. The Faculty welcomes applicants for PhD programs in a range of disciplines in the Doctoral School of Chemistry and Environmental Sciences and the Doctoral School of Chemical Engineering and Materials Science.</p>
+                            <p>The Faculty of Engineering provides a solid academic and practice-oriented education. Our aim is not just to discuss sustainability, but to make it widely accessible through innovative solutions that can be applied in practice, both at the regional and global levels. The Faculty of Engineering has a long tradition of hosting and supporting international students. Therefore, we aim to offer you the best international experience possible.</p>
+                        </div>
+                        <div class="relative">
+                            <img src="https://uni-pannon.hu/images/_Z2A0929.jpg" alt="Students collaborating in a modern engineering lab" class="w-full rounded-2xl border border-white/60 shadow-2xl">
+                            <span class="absolute -right-6 -top-6 hidden h-24 w-24 rounded-full bg-sky-200/60 blur-2xl lg:block"></span>
+                        </div>
                     </div>
-                    <div class="card">
-                        <h3>Research Excellence</h3>
-                        <p>Home to the Research Institute of Biomolecular and Chemical Engineering, ranked among Hungary's top 50, providing ample opportunities for cutting-edge research.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Award-Winning Faculty</h3>
-                        <p>Our faculty has received multiple accolades, including the Higher Education Talent Point and the Higher Education Quality Award, reflecting our commitment to excellence.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Programs Section -->
-        <section id="programs" class="bg-white">
-            <div class="container">
-                <div class="section-title-wrapper"><h2 class="section-title">Available Programs</h2></div>
-                <div x-data="{ openTab: 'bsc' }" class="tabs-container">
-                    <div class="tabs-nav">
-                        <button @click="openTab = 'bsc'" :class="{ 'active': openTab === 'bsc' }" class="tab-button">Undergraduate (BSc)</button>
-                        <button @click="openTab = 'msc'" :class="{ 'active': openTab === 'msc' }" class="tab-button">Master (MSc) Veszprém Campus</button>
-                        <button @click="openTab = 'phd'" :class="{ 'active': openTab === 'phd' }" class="tab-button">Doctoral (PhD)</button>
-                    </div>
-                    
-                    <div x-show="openTab === 'bsc'">
-                        <div class="program-item">
-                            <img src="https://placehold.co/200x200/93C5FD/FFFFFF?text=BSc" alt="Undergraduate students">
-                            <div>
-                                <h4><a href="#" >BSc in Environmental Engineering</a></h4>
-                                <p>Blends engineering, science, and management with practical training in environmental technologies to tackle pollution and promote protection.</p>
-                                <h4 style="margin-top: 1rem;"><a href="#">BSc in Environmental Sciences</a></h4>
-                                <p>Delivers a broad, scientifically rigorous education in biology, chemistry, ecology, and earth systems, enhanced by practical lab work.</p>
-                                <h4 style="margin-top: 1rem;"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/undergraduate-programmes/bsc-in-water-operation-engineering" target="_blank">BSc in Water Operation Engineering (Nagykanizsa Campus)</a> </h4>
-                                <p>Equips students with skills for water and wastewater treatment, emphasising lab work, automation, and quality assurance.</p>
+                </section>
+
+                <section id="why-us" class="glass-card p-8 md:p-12">
+                    <div class="space-y-8">
+                        <div class="text-center">
+                            <h2 class="section-title">Why Choose Us?</h2>
+                            <p class="section-subtitle mt-2 text-base">Experience excellence, innovation, and community.</p>
+                        </div>
+                        <div class="grid gap-6 md:grid-cols-3">
+                            <div class="feature-card">
+                                <h3 class="text-xl font-semibold text-[color:var(--brand-color)]">Internationally Recognised Diploma (IChemE)</h3>
+                                <p>Our chemical engineering programs (BSc and MSc) are accredited by the Institution of Chemical Engineers, ensuring your degree is accepted in the Commonwealth countries and the USA.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3 class="text-xl font-semibold text-[color:var(--brand-color)]">Research Excellence</h3>
+                                <p>Home to the Research Institute of Biomolecular and Chemical Engineering, ranked among Hungary's top 50, providing ample opportunities for cutting-edge research.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3 class="text-xl font-semibold text-[color:var(--brand-color)]">Award-Winning Faculty</h3>
+                                <p>Our faculty has received multiple accolades, including the Higher Education Talent Point and the Higher Education Quality Award, reflecting our commitment to excellence.</p>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                    <div x-show="openTab === 'msc'" style="display:none;">
-                        <div class="program-item">
-                            <img src="https://placehold.co/200x200/60A5FA/FFFFFF?text=MSc" alt="Master's students">
-                            <div>
-                                <h4><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/materials-engineering-msc" target="_blank">MSc in Materials Engineering</a></h4><p>Develop expertise in the structure, properties, and behaviour of materials like metals, ceramics, and polymers.</p>
-                                <h4 style="margin-top: 1rem;"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/environmental-engineering-msc" target="_blank">MSc in Environmental Engineering</a></h4><p>Focuses on identifying and mitigating environmental hazards and promoting sustainable development.</p>
-                                <h4 style="margin-top: 1rem;"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/environmental-science-msc" target="_blank">MSc in Environmental Sciences</a></h4><p>Gain the ability to independently investigate and evaluate the effects of human activity on the environment.</p>
-                                <h4 style="margin-top: 1rem;"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/chemistry-msc" target="_blank">MSc in Chemistry</a></h4><p>Prepares graduates for positions in chemical production, research institutes, and environmental management.</p>
-                                <h4 style="margin-top: 1rem;"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/chemical-engineering-msc" target="_blank">MSc in Chemical Engineering</a></h4><p>Trained to perform high-level professional tasks in research, development, and management. Specialisation: petrol-chemistry.</p>
+                <section id="programs" class="glass-card p-8 md:p-12">
+                    <div class="space-y-10">
+                        <div class="text-center">
+                            <h2 class="section-title">Available Programs</h2>
+                            <p class="section-subtitle mt-2 text-base">Explore every level of study from undergraduate to doctoral.</p>
+                        </div>
+                        <div x-data="{ openTab: 'bsc' }" class="space-y-8 tabs">
+                            <div class="flex flex-wrap justify-center gap-3">
+                                <button @click="openTab = 'bsc'" :class="{ 'active': openTab === 'bsc' }" class="tab-btn">Undergraduate (BSc)</button>
+                                <button @click="openTab = 'msc'" :class="{ 'active': openTab === 'msc' }" class="tab-btn">Master (MSc) Veszprém Campus</button>
+                                <button @click="openTab = 'phd'" :class="{ 'active': openTab === 'phd' }" class="tab-btn">Doctoral (PhD)</button>
+                            </div>
+
+                            <div class="space-y-8">
+                                <div x-show="openTab === 'bsc'" class="tab-content active">
+                                    <div class="flex flex-col items-center gap-8 text-center md:flex-row md:items-start md:text-left">
+                                        <img src="https://placehold.co/200x200/93C5FD/FFFFFF?text=BSc" alt="Undergraduate students" class="program-image">
+                                        <div class="space-y-6 text-slate-700">
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="#">BSc in Environmental Engineering</a></h4>
+                                                <p>Blends engineering, science, and management with practical training in environmental technologies to tackle pollution and promote protection.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="#">BSc in Environmental Sciences</a></h4>
+                                                <p>Delivers a broad, scientifically rigorous education in biology, chemistry, ecology, and earth systems, enhanced by practical lab work.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/undergraduate-programmes/bsc-in-water-operation-engineering" target="_blank">BSc in Water Operation Engineering (Nagykanizsa Campus)</a></h4>
+                                                <p>Equips students with skills for water and wastewater treatment, emphasising lab work, automation, and quality assurance.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div x-show="openTab === 'msc'" class="tab-content">
+                                    <div class="flex flex-col items-center gap-8 text-center md:flex-row md:items-start md:text-left">
+                                        <img src="https://placehold.co/200x200/60A5FA/FFFFFF?text=MSc" alt="Master students collaborating" class="program-image">
+                                        <div class="space-y-6 text-slate-700">
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/materials-engineering-msc" target="_blank">MSc in Materials Engineering</a></h4>
+                                                <p>Focuses on developing and applying cutting-edge materials for industrial innovation, sustainability, and advanced manufacturing.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/environmental-engineering-msc" target="_blank">MSc in Environmental Engineering</a></h4>
+                                                <p>Prepares students to analyse and solve environmental challenges using advanced technologies and sustainable engineering practices.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/chemical-engineering-msc" target="_blank">MSc in Chemical Engineering (Nagykanizsa Campus)</a></h4>
+                                                <p>Offers specialisation in petrol-chemistry, focusing on industry-relevant research, process design, and management.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/environmental-science-msc" target="_blank">MSc in Environmental Sciences</a></h4>
+                                                <p>Gain the ability to independently investigate and evaluate the effects of human activity on the environment.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/chemistry-msc" target="_blank">MSc in Chemistry</a></h4>
+                                                <p>Prepares graduates for positions in chemical production, research institutes, and environmental management.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/master-programmes/chemical-engineering-msc" target="_blank">MSc in Chemical Engineering</a></h4>
+                                                <p>Trained to perform high-level professional tasks in research, development, and management. Specialisation: petrol-chemistry.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div x-show="openTab === 'phd'" class="tab-content">
+                                    <div class="flex flex-col items-center gap-8 text-center md:flex-row md:items-start md:text-left">
+                                        <img src="https://placehold.co/200x200/3B82F6/FFFFFF?text=PhD" alt="Doctoral researcher" class="program-image">
+                                        <div class="space-y-6 text-slate-700">
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://mk.uni-pannon.hu/index.php/en/cemsds" target="_blank">Chemical Engineering and Materials Science Doctoral School</a></h4>
+                                                <p>Train scientists for independent research in leading fields of chemical engineering and materials science.</p>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://mk.uni-pannon.hu/index.php/en/dsces" target="_blank">Doctoral School of Chemistry and Environmental Sciences</a></h4>
+                                                <p>Focuses on training scientists to address global environmental challenges through scientific inquiry.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div x-show="openTab === 'phd'" style="display:none;">
-                         <div class="program-item">
-                            <img src="https://placehold.co/200x200/3B82F6/FFFFFF?text=PhD" alt="Doctoral researcher">
-                            <div>
-                                <h4><a href="https://mk.uni-pannon.hu/index.php/en/cemsds" target="_blank">Chemical Engineering and Materials Science Doctoral School</a></h4>
-                                <p>Train scientists for independent research in leading fields of chemical engineering and materials science.</p>
-                                <h4 style="margin-top: 1rem;"><a href="https://mk.uni-pannon.hu/index.php/en/dsces" target="_blank">Doctoral School of Chemistry and Environmental Sciences</a></h4>
-                                <p>Focuses on training scientists to address global environmental challenges through scientific inquiry.</p>
+                </section>
+
+                <section id="apply" class="glass-card p-8 md:p-12">
+                    <div class="grid gap-10 lg:grid-cols-5">
+                        <div class="lg:col-span-3 space-y-6 text-slate-700">
+                            <h2 class="section-title">How to Apply</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="text-lg font-semibold text-[color:var(--brand-color)]">Self-funded Application Period:</h4>
+                                    <ul class="mt-2 space-y-1 list-disc list-inside">
+                                        <li>Autumn semester: 1st February – 30th April</li>
+                                        <li>Spring semester: 15th August – 15th October</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-[color:var(--brand-color)]">English Proficiency:</h4>
+                                    <p>A strong command of English is essential. We accept TOEFL or IELTS. An official test is not required if you are a native speaker or completed previous studies in English.</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-[color:var(--brand-color)]">Tuition Fees (per semester):</h4>
+                                    <ul class="mt-2 space-y-1 list-disc list-inside">
+                                        <li>BSc Programs: €1750</li>
+                                        <li>MSc Programs: €1950</li>
+                                        <li>PhD Programs: €2200</li>
+                                    </ul>
+                                </div>
+                                <p>For inquiries and application forms, please email us or visit our website.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="mailto:facultyofengineering@mk.uni-pannon.hu" class="primary-btn"><i class="fas fa-envelope"></i>Email Us</a>
+                                <a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/admission/application" target="_blank" class="secondary-btn"><i class="fas fa-globe"></i>Visit Website</a>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2 space-y-6">
+                            <h2 class="section-title text-center">Scholarships</h2>
+                            <div class="space-y-4">
+                                <div class="feature-card">
+                                    <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://stipendiumhungaricum.hu/" target="_blank">Stipendium Hungaricum</a></h4>
+                                    <p>Hungary's most prestigious scholarship, covering tuition, stipend, accommodation, and insurance.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://diasporascholarship.hu/en/" target="_blank">Hungarian Diaspora Scholarship</a></h4>
+                                    <p>For those in a Hungarian diaspora outside Europe, covering tuition, stipend, accommodation, and insurance.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4 class="text-lg font-semibold text-[color:var(--brand-color)]"><a href="https://international.uni-pannon.hu/admission/scholarship-and-funding" target="_blank">University of Pannonia Scholarship</a></h4>
+                                    <p>The University of Pannonia Scholarship rewards academic excellence and supports talented students in achieving their educational goals. This scholarship is available to students after they have enrolled and is designed to recognise outstanding academic performance. By providing financial assistance, this scholarship helps students focus on their studies and make the most of their educational experience. The scholarship is available from the second active semester following enrolment. It is awarded for a maximum of one semester, but students can reapply for the next semester.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Application & Scholarships Section -->
-        <section id="apply">
-            <div class="container grid grid-md-cols-5">
-                <div class="application-card md-col-span-3">
-                    <h2 style="font-size: 1.875rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--brand);">How to Apply</h2>
-                    <h4>Self-funded Application Period:</h4>
-                    <ul>
-                        <li>Autumn semester: 1st February – 30th April</li>
-                        <li>Spring semester: 15th August – 15th October</li>
-                    </ul>
-                    <h4>English Proficiency:</h4>
-                    <p style="margin-bottom: 1rem;">A strong command of English is essential. We accept TOEFL or IELTS. An official test is not required if you are a native speaker or completed previous studies in English.</p>
-                    <h4>Tuition Fees (per semester):</h4>
-                    <ul>
-                       <li>BSc Programs: €1750</li>
-                       <li>MSc Programs: €1950</li>
-                       <li>PhD Programs: €2200</li>
-                    </ul>
-                    <p>For inquiries and application forms, please email us or visit our website.</p>
-                    <div class="button-group">
-                         <a href="mailto:facultyofengineering@mk.uni-pannon.hu" class="button-primary">Email Us</a>
-                         <a href="https://felveteli.mk.uni-pannon.hu/index.php/en/programmes/admission/application" target="_blank" class="button-secondary">Visit Website</a>
-                    </div>
-                </div>
-                <div class="md-col-span-2">
-                     <h2 style="font-size: 1.875rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; color: var(--brand);">Scholarships</h2>
-                     <div class="scholarships-container">
-                         <div class="scholarship-card">
-                            <h4> <a href="https://stipendiumhungaricum.hu/" target="_blank">Stipendium Hungaricum</a></h4>
-                            <p>Hungary's most prestigious scholarship, covering tuition, stipend, accommodation, and insurance.</p>
-                         </div>
-                         <div class="scholarship-card">
-                            <h4><a href="https://diasporascholarship.hu/en/" target="_blank">Hungarian Diaspora Scholarship</a></h4>
-                            <p>For those in a Hungarian diaspora outside Europe, covering tuition, stipend, accommodation, and insurance.</p>
-                         </div>
-                         <div class="scholarship-card">
-                            <h4><a href="https://international.uni-pannon.hu/admission/scholarship-and-funding" target="_blank">University of Pannonia Scholarship</a></h4>
-                            <p>The University of Pannonia Scholarship rewards academic excellence and supports talented students in achieving their educational goals. This scholarship is available to students after they have enrolled and is designed to recognise outstanding academic performance. By providing financial assistance, this scholarship helps students focus on their studies and make the most of their educational experience. The scholarship is available from the second active semester following enrolment. It is awarded for a maximum of one semester, but students can reapply for the next semester.</p>
-                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Accommodation Section -->
-        <section id="accommodation" class="bg-white">
-            <div class="container">
-                <div class="section-title-wrapper"><h2 class="section-title">Accommodation Options</h2></div>
-                <p style="text-align: center; max-width: 48rem; margin: 0 auto 2.5rem;">We believe a comfortable living situation is essential. First-year students have guaranteed admission to one of our dormitories, which offer safety, great locations, free Wi-Fi, and easy access to support services. For more information, visit <a href="https://admission.uni-pannon.hu/accomodation" target="_blank"><strong><u>this site.</u></strong></a> </p>
-                <div class="grid grid-md-cols-3">
-                    <div class="accommodation-card">
-                        <img src="https://kollegiumok.uni-pannon.hu/images/docman-files/images/kollegiumok/img_8824.jpg" alt="Central Dormitory">
-                        <div class="accommodation-card-content">
-                            <h3>Central Dormitory</h3>
-                            <p>Located on the lower campus with a lively social atmosphere right in the heart of campus life.</p>
+                <section id="accommodation" class="glass-card p-8 md:p-12">
+                    <div class="space-y-8">
+                        <div class="text-center">
+                            <h2 class="section-title">Accommodation Options</h2>
+                            <p class="section-subtitle mx-auto mt-3 max-w-3xl">We believe a comfortable living situation is essential. First-year students have guaranteed admission to one of our dormitories, which offer safety, great locations, free Wi-Fi, and easy access to support services. For more information, visit <a href="https://admission.uni-pannon.hu/accomodation" target="_blank" class="font-semibold text-[color:var(--brand-color)] underline">this site.</a></p>
+                        </div>
+                        <div class="grid gap-6 md:grid-cols-3">
+                            <div class="overflow-hidden rounded-2xl border border-white/60 bg-white/70 shadow-xl">
+                                <img src="https://kollegiumok.uni-pannon.hu/images/docman-files/images/kollegiumok/img_8824.jpg" alt="Central Dormitory" class="h-60 w-full object-cover">
+                                <div class="space-y-2 p-6">
+                                    <h3 class="text-xl font-semibold text-[color:var(--brand-color)]">Central Dormitory</h3>
+                                    <p class="text-slate-600">Located on the lower campus with a lively social atmosphere right in the heart of campus life.</p>
+                                </div>
+                            </div>
+                            <div class="overflow-hidden rounded-2xl border border-white/60 bg-white/70 shadow-xl">
+                                <img src="https://kollegiumok.uni-pannon.hu/images/docman-files/images/kollegiumok/magister.jpg" alt="Magister Dormitory" class="h-60 w-full object-cover">
+                                <div class="space-y-2 p-6">
+                                    <h3 class="text-xl font-semibold text-[color:var(--brand-color)]">Magister Dormitory</h3>
+                                    <p class="text-slate-600">The newest residence on the upper campus, offering a modern living environment close to the library.</p>
+                                </div>
+                            </div>
+                            <div class="overflow-hidden rounded-2xl border border-white/60 bg-white/70 shadow-xl">
+                                <img src="https://pen.uni-pannon.hu/wp-content/uploads/2024/06/Koli.jpg" alt="Zárda Dormitory" class="h-60 w-full object-cover">
+                                <div class="space-y-2 p-6">
+                                    <h3 class="text-xl font-semibold text-[color:var(--brand-color)]">Zárda Dormitory</h3>
+                                    <p class="text-slate-600">Located near the city center in a quiet, peaceful environment with well-equipped facilities.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="accommodation-card">
-                        <img src="https://kollegiumok.uni-pannon.hu/images/docman-files/images/kollegiumok/magister.jpg" alt="Magister Dormitory">
-                        <div class="accommodation-card-content">
-                            <h3>Magister Dormitory</h3>
-                            <p>The newest residence on the upper campus, offering a modern living environment close to the library.</p>
+                </section>
+
+                <section id="current-students" class="glass-card p-8 md:p-12">
+                    <div class="space-y-8">
+                        <div class="text-center">
+                            <h2 class="section-title">Guide for Current Students</h2>
+                            <p class="section-subtitle mt-2">Helpful resources and support from arrival to everyday life.</p>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="accordion-item" x-data="{ open: false }">
+                                <button @click="open = !open" class="accordion-button" :aria-expanded="open.toString()">
+                                    <span>Arrival & Registration</span>
+                                    <i class="fas fa-chevron-down text-slate-500 transition-transform" :class="{ 'rotate-180 text-[color:var(--brand-color)]': open }"></i>
+                                </button>
+                                <div class="accordion-content" x-ref="content" :style="open && { 'max-height': $refs.content.scrollHeight + 'px', 'margin-top': '1rem' }">
+                                    <div class="space-y-4 text-slate-700">
+                                        <p><a href="https://studentguide.uni-pannon.hu/#transportation" target="_blank" class="font-semibold text-[color:var(--brand-color)] underline">Getting to the University Campuses</a></p>
+                                        <p>Hungary has one international airport, the Liszt Ferenc International Airport in Budapest, which is a well-connected transportation point. Then students have 3 public transport routes to choose from when getting from Budapest to the Campuses.</p>
+                                        <p><a href="https://studentguide.uni-pannon.hu/#administration" target="_blank" class="font-semibold text-[color:var(--brand-color)] underline">Registration</a></p>
+                                        <p>Once you have obtained your visa and entered Hungary, you will need to register at your university. The university reserves the first week of each new academic year for enrolment. It would be advisable to check the student office and the institution's website for the exact dates and location of registration. Make sure to bring all important documents and some form of ID with you.</p>
+                                        <p>Once you have enrolled as a student at the University of Pannonia, you will need to find the immigration office. We recommend that students visit the immigration office with their student mentor. Students will receive more information about their enrolment procedure from the International Mobility Office.</p>
+                                        <p><a href="https://international.uni-pannon.hu/?option=com_content&view=article&id=6073" target="_blank" class="font-semibold text-[color:var(--brand-color)] underline">Upon Arrival</a></p>
+                                        <p>The university organises welcoming events for its incoming international students. This is a great opportunity for meeting new people, learning more about your new “academic environment” and generally acclimatising yourself to your new surroundings. You may find it helpful to visit the respective international office’s website, where you can learn more about these events.</p>
+                                        <p><a href="https://international.uni-pannon.hu/hu/oktatas/international-mobility-office.html" target="_blank" class="font-semibold text-[color:var(--brand-color)] underline">International Mobility Office</a></p>
+                                        <p><a href="https://sasbizottsag.uni-pannon.hu/en/" target="_blank" class="font-semibold text-[color:var(--brand-color)] underline">Support of Students with Special Needs</a></p>
+                                        <p>The Committee for Special Needs Students was established to support young people with special needs and guarantee equal opportunities for higher education.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item" x-data="{ open: false }">
+                                <button @click="open = !open" class="accordion-button" :aria-expanded="open.toString()">
+                                    <span>Academic Information</span>
+                                    <i class="fas fa-chevron-down text-slate-500 transition-transform" :class="{ 'rotate-180 text-[color:var(--brand-color)]': open }"></i>
+                                </button>
+                                <div class="accordion-content" x-ref="content" :style="open && { 'max-height': $refs.content.scrollHeight + 'px', 'margin-top': '1rem' }">
+                                    <div class="space-y-4 text-slate-700">
+                                        <p><strong>Study and Grading System:</strong> The academic year consists of two semesters, the autumn (September–January) and the spring (February-June) terms. Both semesters include a 14-week study period for lectures, seminars and practice and a 6-week examination period. Exams are concentrated in the 6-week exam period, but students have assignments and tests during the 14-week study period before their exams. At the beginning of each semester, students must register for their courses and at the end of the semester, they must register for their exams using the Neptun system. Training is based on a seminar/lab and lecture system. Seminars are generally smaller discussion groups with active student participation. In the seminar/lab, grades are usually awarded based on in-class performance, midterm and final papers, essays, oral presentations, or a combination of these requirements. Class attendance is mandatory for seminars. Lectures follow the typical model: a bigger audience, where students gain a broad and detailed knowledge of a particular discipline. As for lectures, class attendance is recommended. Students are awarded grades based on the results of oral and/or written examinations, which are conducted during the six-week examination period at the end of the academic term.</p>
+                                        <p><strong>Neptun (Electronic Academic System):</strong> The NEPTUN Electronic Academic System is in use at all faculties of the university for educational administration. This electronic system is used to manage all administrative matters related to registration, courses, exams, tuition fees and stipends. All students, as well as administrators and lecturers throughout the University, use the Neptun system.</p>
+                                        <p><strong>Credit System and the Methods of Assessment:</strong> The European Credit Transfer System (ECTS) was introduced into Hungarian legislation in September 2003. Students are assessed based on their learning and performance. The grading system is as follows: excellent (5), good (4), satisfactory (3), pass (2) and fail (1). A three-stage grading is also used in certain cases: excellent, satisfactory, and fail.</p>
+                                        <p><a href="https://international.uni-pannon.hu/?option=com_content&view=article&id=6090" target="_blank" class="font-semibold text-[color:var(--brand-color)] underline">Academic Calendar</a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item" x-data="{ open: false }">
+                                <button @click="open = !open" class="accordion-button" :aria-expanded="open.toString()">
+                                    <span>Support Services</span>
+                                    <i class="fas fa-chevron-down text-slate-500 transition-transform" :class="{ 'rotate-180 text-[color:var(--brand-color)]': open }"></i>
+                                </button>
+                                <div class="accordion-content" x-ref="content" :style="open && { 'max-height': $refs.content.scrollHeight + 'px', 'margin-top': '1rem' }">
+                                    <div class="space-y-4 text-slate-700">
+                                        <p><strong>Support services, health and wellbeing:</strong> The process of settling in a new country entails a multitude of transitions, encompassing not only the social and cultural aspects of a foreign environment but also the more immediate changes in the surrounding environment, climate, diet and cultural norms. It is therefore essential that individuals take steps to ensure their well-being during this period of adjustment and that they have access to support networks to assist them in this endeavour.</p>
+                                        <p><strong>Student Union:</strong> You will meet the Student Union at various events during your time at university, so it is helpful to know a little about the organisation. The Student Union is the official representative body of students at the University. Student affairs at the university level are the responsibility of the University Student Union (HÖK in Hungarian). They represent the interests of students in the highest decision-making bodies, administer university-level scholarships, dormitory places and organise major cultural and sporting events.</p>
+                                        <p><strong>Student Mentoring System:</strong> We are proud to be able to offer our students the benefit of professional and personal development support from our mentors. Should you wish to do so, you can request a student mentor from the outset of your studies. This mentor will then be able to monitor your academic progress and individual development.<br><br>
+                                        <u>Besides personal consultations, we also provide guidance on a range of issues, including:</u> <br><br>
+                                        Settling into student life, includes advice on adapting to the academic and social environment of the university.<br><br>
+                                        Recognising cultural changes, including advice on navigating cultural differences and adapting to the local culture.<br><br>
+                                        Living in Veszprém, including advice on opening a bank account, navigating the local economy, and understanding the local housing market.<br><br>
+                                        Health services, including advice on accessing healthcare and mental health services.<br><br>
+                                        Academic issues, including advice on navigating the academic system and understanding the local academic culture.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="accommodation-card">
-                        <img src="https://pen.uni-pannon.hu/wp-content/uploads/2024/06/Koli.jpg" alt="Zárda Dormitory">
-                        <div class="accommodation-card-content">
-                            <h3>Zárda Dormitory</h3>
-                            <p>Located near the city center in a quiet, peaceful environment with well-equipped facilities.</p>
+                </section>
+
+                <section id="student-life" class="glass-card p-8 md:p-12">
+                    <div class="grid gap-10 lg:grid-cols-[1.1fr,1fr] lg:items-center">
+                        <div class="space-y-6 text-slate-700">
+                            <h2 class="section-title">Vibrant Student Life</h2>
+                            <h3 class="text-xl font-semibold text-[color:var(--brand-color)]">Community and Events</h3>
+                            <ul class="space-y-3 text-base">
+                                <li><strong>University Days of Veszprém (VEN):</strong> The country's first and most cherished university festival, held every two years.</li>
+                                <li><strong>Faculties' and Freshers' Balls:</strong> Traditional, formal events to connect with colleagues and lecturers in a fun atmosphere.</li>
+                                <li><strong>Balaton Regatta:</strong> An annual rowing competition on Lake Balaton between students and professors.</li>
+                                <li><strong>Pannon CommunityHub:</strong> A community space for young people to meet, socialize, and hold cultural activities.</li>
+                                <li><strong>Sports:</strong> Join our rowing, volleyball, basketball, and futsal teams or use our newly renovated gym.</li>
+                            </ul>
+                        </div>
+                        <div class="relative">
+                            <img src="https://uni-pannon.hu/images/hallgatok-stock.jpg" alt="Students enjoying a campus festival" class="w-full rounded-2xl border border-white/60 shadow-2xl">
+                            <span class="absolute -left-6 -top-6 hidden h-24 w-24 rounded-full bg-pink-200/60 blur-2xl lg:block"></span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <!-- Guide for Current Students Section -->
-        <section id="current-students">
-            <div class="container">
-                <div class="section-title-wrapper"><h2 class="section-title">Guide for Current Students</h2></div>
-                <div class="grid" style="max-width: 56rem; margin: 0 auto; gap: 2rem;">
-                    <div class="accordion-item" x-data="{ open: false }">
-                        <button @click="open = !open" class="accordion-button" :aria-expanded="open.toString()">
-                            <span>Arrival & Registration</span>
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content" x-ref="content" :style="open && { 'max-height': $refs.content.scrollHeight + 'px', 'margin-top': '1rem' }">
-                            <p style="margin-bottom: 0.5rem;"><a href="https://studentguide.uni-pannon.hu/#transportation" target="_blank"><strong><u>Getting to the University Campuses</u></strong></a></p>
-							<p>
-							Hungary has one international airport, the Liszt Ferenc International Airport in Budapest, which is a well-connected transportation point. Then students have 3 public transport routes to choose from when getting from Budapest to the Campuses.
-							</p>
-                          
-							<p style="margin-bottom: 0.5rem;"><a href="https://studentguide.uni-pannon.hu/#administration" target="_blank"><strong><u>Registration</u></strong></a></p>
-							<p style="margin-bottom: 0.5rem;">
-							Once you have obtained your visa and entered Hungary, you will need to register at your university. The university reserves the first week of each new academic year for enrolment. It would be advisable to check the student office and the institution's website for the exact dates and location of registration. Make sure to bring all important documents and some form of ID with you.
-							</p>
-							<p style="margin-bottom: 0.5rem;">
-							Once you have enrolled as a student at the University of Pannonia, you will need to find the immigration office. We recommend that students visit the immigration office with their student mentor.  Students will receive more information about their enrolment procedure from the International Mobility Office. </p>
-							<a href="https://international.uni-pannon.hu/?option=com_content&view=article&id=6073" target="_blank"><strong><u>Upon Arrival</u></strong></a>
-							<p style="margin-bottom: 0.5rem;">
-							The university organises welcoming events for its incoming international students. This is a great opportunity for meeting new people, learning more about your new “academic environment” and generally acclimatising yourself to your new surroundings. You may find it helpful to visit the respective international office’s website, where you can learn more about these events.</p>
-							<a href="https://international.uni-pannon.hu/hu/oktatas/international-mobility-office.html" target="_blank"><strong><u>International Mobility Office</u></strong></a>
-							
-						
-                        </div>
-                    </div>
-                    <div class="accordion-item" x-data="{ open: false }">
-                        <button @click="open = !open" class="accordion-button" :aria-expanded="open.toString()">
-                            <span>Academic Information</span>
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content" x-ref="content" :style="open && { 'max-height': $refs.content.scrollHeight + 'px', 'margin-top': '1rem' }">
-                            <p style="margin-bottom: 0.5rem;"><strong>Study and Grading System:</strong> The academic year consists of two semesters, the autumn (September–January) and the spring (February-June) terms. Both semesters include a 14-week study period for lectures, seminars and practice and a 6-week examination period. Exams are concentrated in the 6-week exam period, but students have assignments and tests during the 14-week study period before their exams. At the beginning of each semester, students must register for their courses and at the end of the semester, they must register for their exams using the Neptun system.
-							Training is based on a seminar/lab and lecture system. Seminars are generally smaller discussion groups with active student participation. In the seminar/lab, grades are usually awarded based on in-class performance, midterm and final papers, essays, oral presentations, or a combination of these requirements. Class attendance is mandatory for seminars.
-							Lectures follow the typical model: a bigger audience, where students gain a broad and detailed knowledge of a particular discipline. As for lectures, class attendance is recommended. Students are awarded grades based on the results of oral and/or written examinations, which are conducted during the six-week examination period at the end of the academic term.
-							</p>
-                            
-							<p style="margin-bottom: 0.5rem;"><strong>Neptun (Electronic Academic System):</strong> The NEPTUN Electronic Academic System is in use at all faculties of the university for educational administration. This electronic system is used to manage all administrative matters related to registration, courses, exams, tuition fees and stipends. All students, as well as administrators and lecturers throughout the University, use the Neptun system.</p>
-                            
-							<p><strong>Credit System and the Methods of Assessment:</strong> The European Credit Transfer System (ECTS) was introduced into Hungarian legislation in September 2003. Students are assessed based on their learning and performance. The grading system is as follows: excellent (5), good (4), satisfactory (3), pass (2) and fail (1). A three-stage grading is also used in certain cases: excellent, satisfactory, and fail.</p>
-							<p style="margin-top: 0.5rem;">
-							<a href="https://international.uni-pannon.hu/?option=com_content&view=article&id=6090" target="_blank"><strong><u>Academic Calendar</u></strong></a></p>
-							
-                        </div>
-                    </div>
-                    <div class="accordion-item" x-data="{ open: false }">
-                        <button @click="open = !open" class="accordion-button" :aria-expanded="open.toString()">
-                            <span>Support Services</span>
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content" x-ref="content" :style="open && { 'max-height': $refs.content.scrollHeight + 'px', 'margin-top': '1rem' }">
-                           <p style="margin-bottom: 0.5rem;"><strong>Support services, health and wellbeing:</strong> The process of settling in a new country entails a multitude of transitions, encompassing not only the social and cultural aspects of a foreign environment but also the more immediate changes in the surrounding environment, climate, diet and cultural norms. It is therefore essential that individuals take steps to ensure their well-being during this period of adjustment and that they have access to support networks to assist them in this endeavour.</p>
-                           <p style="margin-bottom: 0.5rem;"><strong>Student Union:</strong> You will meet the Student Union at various events during your time at university, so it is helpful to know a little about the organisation. The Student Union is the official representative body of students at the University. Student affairs at the university level are the responsibility of the University Student Union (HÖK in Hungarian). They represent the interests of students in the highest decision-making bodies, administer university-level scholarships, dormitory places and organise major cultural and sporting events.</p>
-                           <p style="margin-bottom: 0.5rem;"><strong>Student Mentoring System:</strong> We are proud to be able to offer our students the benefit of professional and personal development support from our mentors. Should you wish to do so, you can request a student mentor from the outset of your studies. This mentor will then be able to monitor your academic progress and individual development.<br><br>
-							<u>Besides personal consultations, we also provide guidance on a range of issues, including:</u> <br><br>
-							Settling into student life, includes advice on adapting to the academic and social environment of the university.<br><br>
-							Recognising cultural changes, including advice on navigating cultural differences and adapting to the local culture.<br><br>
-							Living in Veszprém, including advice on opening a bank account, navigating the local economy, and understanding the local housing market.<br><br>
-							Health services, including advice on accessing healthcare and mental health services.<br><br>
-							Academic issues, including advice on navigating the academic system and understanding the local academic culture.
-							</p>
-
-						   
-						   
-						  <h3 style="margin-bottom: 0.5rem;"><strong> Career and Academic Support </strong></h3>
-							
-							<div class="application-card md-col-span-3">
-							<p style="margin-bottom: 0.5rem;"><strong>Pannonia Scholarship Program</strong></p>
-							<p style="margin-bottom: 0.5rem;">The Pannónia Scholarship Programme offers both short and long-term mobility opportunities for Hungarian higher education students and staff to study, research, teach, or do traineeships abroad in every country of the world. </p> 
-							<p style="margin-bottom: 0.5rem;">Full Credit Recognition: The programme guarantees that credits earned during study abroad will be fully recognised, ensuring that students' academic progress continues seamlessly.</p>
-							<p style="margin-bottom: 0.5rem;">Top Global Institutions: The programme connects with leading universities, providing students with the chance to study at institutions ranked among the best by the Times Higher Education and Quacquarelli Symonds.</p>
-							<p style="margin-bottom: 0.5rem;">Diverse Mobility Options: With options ranging from short-term conference attendances to long-term study periods, the programme accommodates a wide range of academic and research needs.</p>
-							</div>
-							
-							<br>
-							
-							<div class="application-card md-col-span-3">
-							
-							<p style="margin-top: 0.5rem;">
-							<a href="https://tehetseggondozas.mk.uni-pannon.hu/index.php/tdk/students-scientific-association" target="_blank"><strong><u>Scientific Student Association</u></strong></a></p>
-							
-							<p style="margin-bottom: 0.5rem;">The Scientific Student Association has been active in Hungary for 70 years. Its essence is the cooperation and joint research activities of university lecturers/researchers and students, a special form of talent management in higher education. </p>
-							<p style="margin-bottom: 0.5rem;">Students can carry out independent research on a topic of their choice, with access to tools and instruments that go far beyond their academic studies. The teachers and researchers of the Faculty of Engineering will provide all the help they can to achieve their goals, whether it is by making use of the faculty's infrastructure, network of contacts, professional assistance or involvement in research groups. They can also take part in skills development courses, communication training and become part of an inspiring community.</p>
-							</div>
-							<br>
-							<div class="application-card md-col-span-3">
-							
-							
-							<p style="margin-bottom: 0.5rem;"><a href="https://karrierkozpont.uni-pannon.hu/en/" target="_blank"><strong><u>Centre for Student Services and Career</u></strong></a></p>
-							<p style="margin-bottom: 0.5rem;">The Centre provides the following services:</p>
-							
-							<ul>
-							<li>psychological counselling</li>
-							<li>career coaching</li>
-							<li>job market training (e.g., job interview workshop)</li>
-							<li>job fairs</li>
-							</ul>
-							</div>
-							<br>
-				<div class="application-card md-col-span-3">
-							
-							<p style="margin-bottom: 0.5rem;"><a href="https://sasbizottsag.uni-pannon.hu/en/" target="_blank"><strong><u>Support of Students with Special Needs</u></strong></a></p>
-
-							<p style="margin-bottom: 0.5rem;">The Committee for Special Needs Students was established to support young people with special needs and guarantee equal opportunities for higher education.</p>
-					</div>	
-
-						   
-						   
-						   
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Student Life Section -->
-        <section id="student-life" class="bg-white">
-            <div class="container">
-                <div class="section-title-wrapper"><h2 class="section-title">Vibrant Student Life</h2></div>
-                <div class="flex-container image-text-section">
-                    <div><img src="https://uni-pannon.hu/images/hallgatok-stock.jpg" alt="Students enjoying a campus festival"></div>
-                    <div>
-                        <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: var(--brand);">Community and Events</h3>
-                        <ul style="display: flex; flex-direction: column; gap: 0.75rem;">
-                            <li><strong>University Days of Veszprém (VEN):</strong> The country's first and most cherished university festival, held every two years.</li>
-                            <li><strong>Faculties' and Freshers' Balls:</strong> Traditional, formal events to connect with colleagues and lecturers in a fun atmosphere.</li>
-                            <li><strong>Balaton Regatta:</strong> An annual rowing competition on Lake Balaton between students and professors.</li>
-                            <li><strong>Pannon CommunityHub:</strong> A community space for young people to meet, socialize, and hold cultural activities.</li>
-                            <li><strong>Sports:</strong> Join our rowing, volleyball, basketball, and futsal teams or use our newly renovated gym.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Veszprem Section -->
-        <section id="veszprem">
-            <div class="container">
-                <div class="flex-container image-text-section" style="flex-direction: column-reverse;">
-                    <div style="flex:1;">
-                        <h2 style="font-size: 1.875rem; font-weight: 800; margin-bottom: 1rem; color: var(--brand);">Living in Veszprém</h2>
-                        <p style="margin-bottom: 1rem;">Students are drawn to Veszprém for a multitude of reasons. The city offers a relatively low cost of living, and it is perceived as a friendly, welcoming, and diverse student city.<br><br>
+                <section id="veszprem" class="glass-card p-8 md:p-12">
+                    <div class="grid gap-10 lg:grid-cols-[1.05fr,1fr] lg:items-center">
+                        <div class="space-y-6 text-slate-700">
+                            <h2 class="section-title">Living in Veszprém</h2>
+                            <p>Students are drawn to Veszprém for a multitude of reasons. The city offers a relatively low cost of living, and it is perceived as a friendly, welcoming, and diverse student city.<br><br>
 If you have the opportunity, it might be a good idea to walk around campus after registration. This is a great way to get to know your new environment. It would be advisable to familiarise yourself with the student office, the international office, your department and the library, as these are likely to be the most important places for your time as an international student. It may be helpful to try to find them and memorise their location.<br><br>
-Veszprém has its public transport system which you can use if you buy a ticket or a pass. When starting your journey, you have to show your pass or punch your ticket. With a student card, you receive a discount on your monthly pass. Make sure you always have your student card with you while travelling to avoid getting fined.
-</p>
-                        
-                        
-                          <h2 style="font-size: 1.875rem; font-weight: 800; margin-bottom: 1rem; color: var(--brand);">Getting to other cities in Hungary</h2>
-                        <p style="margin-bottom: 1rem;">Getting to other cities in Hungary
-You can choose from the following travel options: railway, bus or car-sharing services. Students have a 50% concession for long-distance coach tickets and railway tickets, but again: always make sure to have a valid Hungarian student card.</p>
-<h2 style="font-size: 1.875rem; font-weight: 800; margin-bottom: 1rem; color: var(--brand);">Enjoying your student experience</h2>
-<p style="margin-bottom: 1rem;">Your top priority should be to make the most of your time at university, professionally and personally. It will be a pivotal chapter in your life, as your time as an international student may largely determine your future career path. The same goes for your young, open-minded and creative adult development. <br>
+Veszprém has its public transport system which you can use if you buy a ticket or a pass. When starting your journey, you have to show your pass or punch your ticket. With a student card, you receive a discount on your monthly pass. Make sure you always have your student card with you while travelling to avoid getting fined.</p>
+                            <h2 class="section-title">Getting to other cities in Hungary</h2>
+                            <p>Getting to other cities in Hungary You can choose from the following travel options: railway, bus or car-sharing services. Students have a 50% concession for long-distance coach tickets and railway tickets, but again: always make sure to have a valid Hungarian student card.</p>
+                            <h2 class="section-title">Enjoying your student experience</h2>
+                            <p>Your top priority should be to make the most of your time at university, professionally and personally. It will be a pivotal chapter in your life, as your time as an international student may largely determine your future career path. The same goes for your young, open-minded and creative adult development.<br>
 Spending time in another country, studying in a language that is not necessarily your mother tongue and working with people from all over the world will greatly enrich your skills and intercultural competence. Both of these could prove crucial to your career.<br><br>
-Although you should indeed take the opportunity to travel and make lots of friends, achieving your academic goals should always be your priority.
-</p>
-                        
-                        
+Although you should indeed take the opportunity to travel and make lots of friends, achieving your academic goals should always be your priority.</p>
+                        </div>
+                        <div class="relative">
+                            <img src="https://uni-pannon.hu/images/NKKI/new%20campus/2023campusdrone-min.jpg" alt="A scenic view of Veszprém" class="w-full rounded-2xl border border-white/60 shadow-2xl">
+                            <span class="absolute -right-6 -bottom-6 hidden h-24 w-24 rounded-full bg-violet-200/60 blur-2xl lg:block"></span>
+                        </div>
                     </div>
-                     <div style="flex:1;"><img src="https://uni-pannon.hu/images/NKKI/new%20campus/2023campusdrone-min.jpg" alt="A scenic view of Veszprém"></div>
-                </div>
+                </section>
             </div>
-        </section>
-        
-    </main>
-    
-    <!-- Footer -->
-    <footer id="contact" class="main-footer">
-        <div class="container">
-            <div>
-                <h2>Get in Touch</h2>
-                <p>Have questions about applications or our programs?</p>
-                <p style="font-size: 1.125rem; color: #dbe7ff; font-weight: 700; margin-bottom: 1.5rem;">Contact our international coordinators:</p>
-                <a href="mailto:facultyofengineering@mk.uni-pannon.hu" class="footer-contact">facultyofengineering@mk.uni-pannon.hu</a>
-                <div style="margin-top: 2rem;">
-                     <p>Join our community on Facebook!</p>
-                     <a href="https://www.facebook.com/groups/482245916782500" target="_blank" class="footer-social-button">International Facebook Group</a>
-                </div>
+        </main>
+    </div>
+
+    <footer id="contact" class="glass-panel mx-4 mb-10 mt-8 rounded-3xl px-6 py-10 sm:mx-auto sm:max-w-4xl">
+        <div class="space-y-6 text-center text-slate-700">
+            <h2 class="section-title">Get in Touch</h2>
+            <p>Have questions about applications or our programs?</p>
+            <p class="text-lg font-semibold text-[color:var(--brand-color)]">Contact our international coordinators:</p>
+            <a href="mailto:facultyofengineering@mk.uni-pannon.hu" class="primary-btn justify-center"><i class="fas fa-envelope"></i>facultyofengineering@mk.uni-pannon.hu</a>
+            <div class="space-y-3 pt-4">
+                <p>Join our community on Facebook!</p>
+                <a href="https://www.facebook.com/groups/482245916782500" target="_blank" class="secondary-btn justify-center"><i class="fab fa-facebook"></i>International Facebook Group</a>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 University of Pannonia – Faculty of Engineering.</p>
-            </div>
+            <p class="pt-6 text-sm text-slate-500">&copy; 2025 University of Pannonia – Faculty of Engineering.</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Mobile menu toggle
             const menuButton = document.querySelector('[data-collapse-toggle="mobile-menu"]');
             const mobileMenu = document.getElementById('mobile-menu');
-            menuButton.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
-                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-                menuButton.setAttribute('aria-expanded', !isExpanded);
-            });
-
-            // Close mobile menu on nav link click
-            const navLinks = document.querySelectorAll('#mobile-menu a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                     if (window.innerWidth < 768) {
-                         mobileMenu.classList.add('hidden');
-                         menuButton.setAttribute('aria-expanded', 'false');
-                     }
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                    menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
                 });
-            });
 
-            // Slogan rotator
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth < 768) {
+                            mobileMenu.classList.add('hidden');
+                            menuButton.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+
             const slogans = document.querySelectorAll('#slogan-container .slogan');
             if (slogans.length > 0) {
                 let currentSloganIndex = 0;
@@ -624,6 +741,19 @@ Although you should indeed take the opportunity to travel and make lots of frien
                     slogans[currentSloganIndex].classList.add('active');
                 }, 3000);
             }
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('section[id], footer[id]').forEach(section => observer.observe(section));
         });
     </script>
 </body>
