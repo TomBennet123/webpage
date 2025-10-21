@@ -1,0 +1,123 @@
+<iframe id="autoH"
+        src="/images/home/studentguide.html"
+        style="width:100%; border:0; overflow:hidden; display:block;"
+        scrolling="no">
+</iframe>
+
+<script>
+  (function(){
+    const iframe = document.getElementById('autoH');
+    if (!iframe) {
+      console.warn('[AutoHeight] iframe #autoH nem található.');
+      return;
+    }
+    // biztos, hogy „szülő” domain = iframe domain
+    const domainOK = true; // ha nem, itt lehetne ellenőrizni: iframe.src origin vs location.origin
+    if (!domainOK) {
+      console.warn('[AutoHeight] Domain mismatch, cannot access iframe contentDocument.');
+      return;
+    }
+
+    // alap stílusbeállítások
+    iframe.style.overflow = 'hidden';
+    iframe.style.display  = 'block';
+
+    // mérés funkció
+    function measure() {
+      let height = 0;
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (!doc) {
+          console.warn('[AutoHeight] iframe document nem elérhető még.');
+          return;
+        }
+        const h1 = doc.documentElement.scrollHeight;
+        const h2 = doc.documentElement.offsetHeight;
+        const h3 = doc.body?.scrollHeight || 0;
+        const h4 = doc.body?.offsetHeight  || 0;
+        height = Math.max(h1, h2, h3, h4);
+
+        console.debug('[AutoHeight] mérés-eredmények:', {
+          scrollHeight: h1,
+          offsetHeight: h2,
+          bodyScrollHeight: h3,
+          bodyOffsetHeight: h4,
+          chosen: height
+        });
+      } catch(e) {
+        console.error('[AutoHeight] Hiba a mérés közben:', e);
+        return;
+      }
+
+      iframe.style.height = height + 'px';
+      console.debug('[AutoHeight] iframe magasság állítva:', height + 'px');
+    }
+
+    // betöltés esemény
+    iframe.addEventListener('load', () => {
+      console.info('[AutoHeight] iframe betöltve, indul a automatikus magasság-mérés.');
+      measure();
+
+      // betűtípusok várása
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (doc.fonts && doc.fonts.ready) {
+          doc.fonts.ready.then(() => {
+            console.debug('[AutoHeight] webfontok betöltve, újramérés.');
+            measure();
+          }).catch(() => {});
+        }
+      } catch(e){}
+
+      // képek figyelése
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const imgs = Array.from(doc.images || []);
+        imgs.forEach(img => {
+          if (!img.complete) {
+            img.addEventListener('load', measure, { passive:true });
+            img.addEventListener('error', measure, { passive:true });
+          }
+        });
+      } catch(e){}
+
+      // ResizeObserver
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const ro = new ResizeObserver(measure);
+        ro.observe(doc.documentElement);
+      } catch(e){}
+
+      // MutationObserver
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const mo = new MutationObserver(measure);
+        mo.observe(doc.documentElement, { childList:true, subtree:true, attributes:true });
+      } catch(e){}
+
+      // transition/animation végén
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.addEventListener('transitionend', measure, { passive:true, capture:true });
+        doc.addEventListener('animationend',  measure, { passive:true, capture:true });
+      } catch(e){}
+
+      // opcionális: biztonsági periódikus mérés
+      const intervalId = setInterval(measure, 2000);
+
+      // opcionális cleanup lehetőség
+      iframe.cleanupAutoHeight = () => {
+        clearInterval(intervalId);
+        console.info('[AutoHeight] leállítva.');
+      };
+    });
+
+    // ha már betöltődött korábban
+    if (iframe.contentDocument && iframe.contentDocument.readyState !== 'loading') {
+      // közvetlenül hívjuk
+      console.info('[AutoHeight] iframe már betöltve, közvetlen indítás.');
+      iframe.dispatchEvent(new Event('load'));
+    }
+
+  })();
+</script>
