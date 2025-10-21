@@ -175,6 +175,20 @@
                 padding-left: 96px;
             }
         }
+        @media (max-width: 639px) {
+            .timeline::before {
+                content: none;
+            }
+            .timeline-item {
+                padding-left: 0;
+            }
+            .timeline-bullet {
+                display: none;
+            }
+        }
+        .timeline-item > .relative {
+            word-break: break-word;
+        }
         .timeline-bullet {
             position: absolute;
             left: 16px;
