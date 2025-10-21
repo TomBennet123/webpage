@@ -5,198 +5,411 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pannon Egyetem MK - Online Mesterszakos Nyílt Nap 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2Lw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --brand-blue: #1c3864;
+            --accent-green: #22c55e;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f97316;
+        }
         body {
             font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(125, 211, 252, 0.35), transparent 55%),
+                radial-gradient(circle at 88% 12%, rgba(192, 132, 252, 0.28), transparent 55%),
+                radial-gradient(circle at 20% 88%, rgba(134, 239, 172, 0.35), transparent 60%),
+                linear-gradient(135deg, #f8fafc 0%, #e6f2ff 50%, #f6ecff 100%);
+            background-attachment: fixed;
+            color: #0f172a;
         }
-        .hero-bg {
-            /* A semi-transparent overlay is applied to ensure text readability over the background image. */
-            background-image: linear-gradient(rgba(0, 45, 98, 0.85), rgba(0, 45, 98, 0.85)), url('https://placehold.co/1920x1080/e0e0e0/333333?text=Modern+Egyetemi+Kampusz');
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            inset: auto;
+            width: 55vmax;
+            height: 55vmax;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -2;
+        }
+        body::before {
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.45), transparent 70%);
+            top: -22vmax;
+            right: -12vmax;
+        }
+        body::after {
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.38), transparent 72%);
+            bottom: -28vmax;
+            left: -8vmax;
+        }
+        .glass-surface {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 45px rgba(15, 23, 42, 0.12);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.26);
+            backdrop-filter: blur(28px);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.55), rgba(148, 163, 184, 0.18), rgba(255, 255, 255, 0));
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        .glass-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(10, 33, 77, 0.88), rgba(28, 56, 100, 0.92)), url('https://placehold.co/1920x1080/e0e0e0/333333?text=Modern+Egyetemi+Kampusz');
             background-size: cover;
             background-position: center;
+            opacity: 0.95;
+            z-index: -2;
         }
-        .section-title {
-            @apply text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12;
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.16), transparent 55%);
+            z-index: -1;
         }
-        .benefit-card {
-            @apply bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transform transition-all duration-300 flex flex-col items-center text-center;
+        .hero-pill {
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+        }
+        .countdown-tile {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            min-width: 90px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+        .countdown-tile span:first-child {
+            letter-spacing: 0.08em;
+        }
+        .benefit-item {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            border-radius: 24px;
+        }
+        .benefit-item:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 40px 70px rgba(15, 23, 42, 0.16);
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 32px;
+            bottom: 32px;
+            left: 22px;
+            width: 3px;
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.6), rgba(168, 85, 247, 0.45));
+        }
+        @media (min-width: 640px) {
+            .timeline::before {
+                left: 32px;
+            }
         }
         .timeline-item {
-            @apply relative pl-8 sm:pl-12 py-6;
+            position: relative;
+            padding-left: 72px;
         }
-        .timeline-item:last-child::before {
-             height: 40px;
+        @media (min-width: 640px) {
+            .timeline-item {
+                padding-left: 96px;
+            }
         }
-        .timeline-item::before {
-            content: '';
-            @apply absolute left-2 sm:left-4 top-0 w-1 h-full bg-gray-200;
+        .timeline-bullet {
+            position: absolute;
+            left: 14px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: var(--brand-blue);
         }
-        .timeline-marker {
-            @apply absolute left-0 sm:left-2 top-8 w-5 h-5 rounded-full border-4 border-white ring-4;
+        @media (min-width: 640px) {
+            .timeline-bullet {
+                left: 24px;
+            }
+        }
+        .cta-section {
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 64, 175, 0.82));
+            z-index: -1;
+        }
+        .cta-section::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.32), transparent 60%);
+            opacity: 0.7;
+            z-index: -1;
+        }
+        .floating-badge {
+            position: absolute;
+            inset-inline-end: 5%;
+            top: 10%;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #fff;
+            backdrop-filter: blur(18px);
+            font-size: 0.95rem;
+        }
+        .floating-badge i {
+            color: #fde68a;
+        }
+        .info-link {
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .info-link:hover {
+            transform: translateX(6px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(71, 85, 105, 0.35);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(71, 85, 105, 0.5);
         }
     </style>
 </head>
-<body class="bg-gray-50">
-
-    <!-- Header & Hero Section -->
-    <header class="hero-bg text-white">
-        <div class="container mx-auto px-6 py-16 md:py-24 text-center">
-            <!-- University Logo Placeholder -->
-            <div class="mb-6">
-                 <h2 class="text-2xl font-semibold tracking-wider uppercase">Pannon Egyetem</h2>
-                 <h1 class="text-lg font-light tracking-widest uppercase">Mérnöki Kar</h1>
+<body class="antialiased text-slate-800">
+    <header class="hero-section text-white">
+        <div class="relative max-w-6xl mx-auto px-6 py-20 md:py-28 lg:py-32">
+            <div class="floating-badge hidden md:flex">
+                <i class="fa-solid fa-video"></i>
+                Élő online esemény
             </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down">Online Mesterszakos Nyílt Nap</h1>
-            <p class="text-2xl md:text-3xl font-light mb-8">2025. november 4.</p>
-            
-            <!-- Countdown Timer -->
-            <div id="countdown-container" class="text-xl md:text-3xl font-bold mb-10 flex justify-center items-center space-x-2 md:space-x-6 text-yellow-300">
-                <div class="text-center bg-white/10 p-4 rounded-lg min-w-[80px]">
-                    <span id="days" class="block text-4xl">0</span><span class="text-sm font-normal text-white/80">Nap</span>
+            <div class="flex flex-col items-center text-center gap-6">
+                <div class="hero-pill px-4 py-2 text-sm md:text-base uppercase tracking-[0.3em] text-white/90">
+                    Pannon Egyetem · Mérnöki Kar
                 </div>
-                <div class="text-center bg-white/10 p-4 rounded-lg min-w-[80px]">
-                    <span id="hours" class="block text-4xl">0</span><span class="text-sm font-normal text-white/80">Óra</span>
+                <h1 class="text-4xl md:text-6xl font-black leading-tight drop-shadow-lg">
+                    Online Mesterszakos Nyílt Nap 2025
+                </h1>
+                <p class="text-xl md:text-2xl text-white/80 max-w-3xl">
+                    Fedezd fel a mérnöki mesterszakok világát, ismerd meg oktatóinkat és hallgatóinkat, és tegyél fel minden kérdést élőben!
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-4 text-lg text-white/80">
+                    <div class="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/10 border border-white/30">
+                        <i class="fa-regular fa-calendar text-yellow-300"></i>
+                        2025. november 4. · 17:30
+                    </div>
+                    <div class="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/10 border border-white/30">
+                        <i class="fa-regular fa-clock text-yellow-300"></i>
+                        MS Teams platformon
+                    </div>
                 </div>
-                <div class="text-center bg-white/10 p-4 rounded-lg min-w-[80px]">
-                    <span id="minutes" class="block text-4xl">0</span><span class="text-sm font-normal text-white/80">Perc</span>
+                <div id="countdown-container" class="flex flex-wrap justify-center gap-4 text-yellow-200 font-semibold text-lg">
+                    <div class="countdown-tile px-6 py-4 text-center">
+                        <span id="days" class="block text-4xl font-black">0</span>
+                        <span class="text-xs uppercase tracking-wide text-white/70">Nap</span>
+                    </div>
+                    <div class="countdown-tile px-6 py-4 text-center">
+                        <span id="hours" class="block text-4xl font-black">0</span>
+                        <span class="text-xs uppercase tracking-wide text-white/70">Óra</span>
+                    </div>
+                    <div class="countdown-tile px-6 py-4 text-center">
+                        <span id="minutes" class="block text-4xl font-black">0</span>
+                        <span class="text-xs uppercase tracking-wide text-white/70">Perc</span>
+                    </div>
+                    <div class="countdown-tile px-6 py-4 text-center">
+                        <span id="seconds" class="block text-4xl font-black">0</span>
+                        <span class="text-xs uppercase tracking-wide text-white/70">Mp</span>
+                    </div>
                 </div>
-                <div class="text-center bg-white/10 p-4 rounded-lg min-w-[80px]">
-                    <span id="seconds" class="block text-4xl">0</span><span class="text-sm font-normal text-white/80">Mp</span>
-                </div>
+                <a href="https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-join%2F19%3Ameeting_YzM2Mjg4OWMtYjlkOS00M2VkLWE3NmItMjM1YTMwNmYzNTM0%40thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%2522d77b9052-84e8-4e3a-b61f-d1f9a03d0a8a%2522%252c%2522Oid%2522%253a%25224f2464bc-e7d3-4961-8634-f5003bad83b5%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=db9d43b2-a71b-49d0-8090-f878810af5f3&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true" target="_blank" class="group relative inline-flex items-center gap-3 px-8 py-4 text-lg font-semibold rounded-full bg-emerald-500 hover:bg-emerald-400 transition duration-300 shadow-lg">
+                    <span>Csatlakozás az eseményhez (MS Teams)</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-white/80 group-hover:translate-x-1 transition"></i>
+                </a>
+                <p class="text-white/70 text-sm">A részvétel ingyenes és regisztrációhoz nem kötött.</p>
             </div>
-
-            <a href="https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-join%2F19%3Ameeting_YzM2Mjg4OWMtYjlkOS00M2VkLWE3NmItMjM1YTMwNmYzNTM0%40thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%2522d77b9052-84e8-4e3a-b61f-d1f9a03d0a8a%2522%252c%2522Oid%2522%253a%25224f2464bc-e7d3-4961-8634-f5003bad83b5%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=db9d43b2-a71b-49d0-8090-f878810af5f3&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg transition duration-300 transform hover:scale-105 inline-block shadow-lg">
-                Csatlakozás az eseményhez (MS Teams)
-            </a>
-            <p class="mt-4 text-gray-200">A részvétel ingyenes és regisztrációhoz nem kötött!</p>
         </div>
     </header>
 
-    <!-- Intro Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-4">Válaszút előtt állsz? Emeld szintre a tudásod!</h2>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                Vegyen részt Mesterszakos online nyílt napunkon 2025. november 4-én 17:30 órától, ahol a Pannon Egyetem Mérnöki Karának oktatóitól és hallgatóitól kaphatsz választ minden kérdésedre. Ismerd meg képzéseinket, a duális lehetőségeket és a karrierkilátásokat!
-            </p>
-        </div>
-    </section>
+    <main class="relative py-16 md:py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <section class="mb-20">
+                <div class="glass-card px-8 py-10 text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Válaszút előtt állsz? Emeld magasabb szintre a tudásod!</h2>
+                    <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                        Vegyél részt mesterszakos online nyílt napunkon 2025. november 4-én 17:30 órától, ahol a Pannon Egyetem Mérnöki Karának oktatóitól és hallgatóitól kaphatsz választ minden kérdésedre. Ismerd meg képzéseinket, a duális lehetőségeket és a karrierkilátásokat!
+                    </p>
+                </div>
+            </section>
 
-    <!-- Benefits Section -->
-    <section class="py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title">Miért éri meg a mesterdiploma?</h2>
-            <div id="benefits-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Benefit cards will be injected here by JavaScript -->
-            </div>
-        </div>
-    </section>
+            <section class="mb-20">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Miért éri meg a mesterdiploma?</h2>
+                    <p class="max-w-2xl text-slate-600">
+                        A mesterszakos tanulmányok egyszerre kínálnak mély szakmai tudást és magas szintű gyakorlati tapasztalatot, amelyekkel felgyorsíthatod a karriered.
+                    </p>
+                </div>
+                <div id="benefits-grid" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></div>
+            </section>
 
-    <!-- Schedule Section -->
-    <section class="py-20 bg-gray-100">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title">A Nyílt Nap Részletes Programja</h2>
-            <div class="max-w-4xl mx-auto">
+            <section class="mb-24">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">A nyílt nap részletes programja</h2>
+                    <p class="max-w-2xl text-slate-600">
+                        Mutatjuk, mikor és mire számíthatsz a Mérnöki Kar eseményén.
+                    </p>
+                </div>
                 <div class="relative">
-                    <!-- Központi Rész -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker ring-blue-500 bg-blue-500"></div>
-                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
-                            <span class="font-bold text-blue-600 text-sm">17:30 - 18:00</span>
-                            <h3 class="text-xl font-bold mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h10a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.707 16.707a2 2 0 01-2.828 0L2 14m20 0l-2.879 2.879a2 2 0 01-2.828 0M5 11V9a2 2 0 012-2h10a2 2 0 012 2v2" /></svg>
-                                Központi Tájékoztató
-                            </h3>
-                            <p class="text-gray-600 mb-4">Ismerd meg a felvételi eljárás legfontosabb tudnivalóit és a karok általános bemutatkozóit a központi Teams felületen.</p>
-                            <ul class="list-none space-y-2 text-gray-700">
-                                <li><strong>17:30 - 17:35:</strong> Rektori köszöntő</li>
-                                <li><strong>17:35 - 17:45:</strong> Általános tájékoztató a keresztféléves felvételi eljárásról</li>
-                                <li><strong>17:45 - 18:00:</strong> Karok rövid tájékoztatója</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="glass-card px-6 py-10">
+                        <div class="absolute inset-0 pointer-events-none opacity-40 mix-blend-overlay" style="background: radial-gradient(circle at top right, rgba(59,130,246,0.3), transparent 60%);"></div>
+                        <div class="timeline relative">
+                            <div class="space-y-10">
+                                <div class="timeline-item">
+                                    <div class="timeline-bullet border-blue-400 shadow-md"><i class="fa-solid fa-landmark text-blue-500"></i></div>
+                                    <div class="relative rounded-2xl border border-blue-100 bg-white/90 p-6 shadow-sm">
+                                        <span class="text-sm font-semibold uppercase tracking-widest text-blue-600">17:30 - 18:00</span>
+                                        <h3 class="mt-2 text-2xl font-bold text-slate-900 flex items-center gap-3">
+                                            <i class="fa-solid fa-bullhorn text-blue-500"></i>
+                                            Központi tájékoztató
+                                        </h3>
+                                        <p class="mt-3 text-slate-600">
+                                            Ismerd meg a felvételi eljárás legfontosabb tudnivalóit és a karok általános bemutatkozóit a központi Teams felületen.
+                                        </p>
+                                        <ul class="mt-4 grid gap-2 text-slate-700 sm:grid-cols-2">
+                                            <li><strong>17:30 - 17:35:</strong> Rektori köszöntő</li>
+                                            <li><strong>17:35 - 17:45:</strong> Általános tájékoztató a keresztféléves felvételiről</li>
+                                            <li><strong>17:45 - 18:00:</strong> Karok rövid tájékoztatója</li>
+                                        </ul>
+                                    </div>
+                                </div>
 
-                    <!-- Kari Rész -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker ring-green-500 bg-green-500"></div>
-                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
-                            <span class="font-bold text-green-600 text-sm">18:00 - 20:00</span>
-                            <h3 class="text-xl font-bold mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                                Mérnöki Kar Részletes Tájékoztatója
-                            </h3>
-                            <p class="text-gray-600 mb-4">Csatlakozz a Mérnöki Kar saját Teams csatornájához, ahol részletesen bemutatjuk mesterképzéseinket.</p>
-                            <p class="font-semibold text-gray-800 mb-2">18:10-től a Mérnöki Kar mesterszakjainak bemutatkozása:</p>
-                            <div class="grid sm:grid-cols-2 gap-x-6 text-gray-700">
-                                <ul>
-                                    <li><strong>18:10-15:</strong> Anyagmérnöki MSc</li>
-                                    <li><strong>18:15-20:</strong> ESG szakember MSc</li>
-                                    <li><strong>18:20-25:</strong> Hulladékgazd. mérnöki MSc</li>
-                                    <li><strong>18:25-30:</strong> Környezetmérnöki MSc</li>
-                                </ul>
-                                 <ul>
-                                    <li><strong>18:30-35:</strong> Környezettudomány MSc</li>
-                                    <li><strong>18:35-40:</strong> Mechatronikai mérnöki MSc</li>
-                                    <li><strong>18:40-45:</strong> Vegyész MSc</li>
-                                    <li><strong>18:45-50:</strong> Vegyészmérnöki MSc</li>
-                                </ul>
+                                <div class="timeline-item">
+                                    <div class="timeline-bullet border-green-400 shadow-md"><i class="fa-solid fa-building-columns text-emerald-500"></i></div>
+                                    <div class="relative rounded-2xl border border-emerald-100 bg-white/90 p-6 shadow-sm">
+                                        <span class="text-sm font-semibold uppercase tracking-widest text-emerald-600">18:00 - 18:50</span>
+                                        <h3 class="mt-2 text-2xl font-bold text-slate-900 flex items-center gap-3">
+                                            <i class="fa-solid fa-flask text-emerald-500"></i>
+                                            A Mérnöki Kar részletes tájékoztatója
+                                        </h3>
+                                        <p class="mt-3 text-slate-600">
+                                            Csatlakozz a Mérnöki Kar saját Teams csatornájához, ahol részletesen bemutatjuk mesterképzéseinket.
+                                        </p>
+                                        <p class="mt-4 font-semibold text-slate-800">18:10-től a Mérnöki Kar mesterszakjainak bemutatkozása:</p>
+                                        <div class="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2 text-slate-700">
+                                            <ul class="space-y-1">
+                                                <li><strong>18:10-15:</strong> Anyagmérnöki MSc</li>
+                                                <li><strong>18:15-20:</strong> ESG szakember MSc</li>
+                                                <li><strong>18:20-25:</strong> Hulladékgazdálkodási mérnöki MSc</li>
+                                                <li><strong>18:25-30:</strong> Környezetmérnöki MSc</li>
+                                            </ul>
+                                            <ul class="space-y-1">
+                                                <li><strong>18:30-35:</strong> Környezettudomány MSc</li>
+                                                <li><strong>18:35-40:</strong> Mechatronikai mérnöki MSc</li>
+                                                <li><strong>18:40-45:</strong> Vegyész MSc</li>
+                                                <li><strong>18:45-50:</strong> Vegyészmérnöki MSc</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-bullet border-purple-400 shadow-md"><i class="fa-solid fa-comments text-purple-500"></i></div>
+                                    <div class="relative rounded-2xl border border-purple-100 bg-white/90 p-6 shadow-sm">
+                                        <span class="text-sm font-semibold uppercase tracking-widest text-purple-600">18:50-től</span>
+                                        <h3 class="mt-2 text-2xl font-bold text-slate-900 flex items-center gap-3">
+                                            <i class="fa-solid fa-circle-question text-purple-500"></i>
+                                            Kérdezz-felelek a szakok képviselőivel
+                                        </h3>
+                                        <p class="mt-3 text-slate-600">
+                                            A bemutatók után minden mesterszak saját, dedikált chatszobában várja az érdeklődők kérdéseit. Itt közvetlenül a szakfelelősökkel, oktatókkal beszélgethetsz.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                     <!-- Chatszobák -->
-                     <div class="timeline-item">
-                        <div class="timeline-marker ring-purple-500 bg-purple-500"></div>
-                         <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
-                             <span class="font-bold text-purple-600 text-sm">18:50-től</span>
-                             <h3 class="text-xl font-bold mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                                Kérdezz-felelek a szakok képviselőivel!
-                             </h3>
-                             <p class="text-gray-600">A bemutatók után minden mesterszak saját, dedikált chatszobában várja az érdeklődők kérdéseit. Itt közvetlenül a szakfelelősökkel, oktatókkal beszélgethetsz.</p>
-                         </div>
+                </div>
+            </section>
+
+            <section class="relative mb-24">
+                <div class="cta-section glass-surface rounded-3xl px-8 py-16 text-center text-white">
+                    <div class="max-w-3xl mx-auto space-y-6">
+                        <h2 class="text-4xl font-bold">Ne maradj le a jövődről!</h2>
+                        <p class="text-lg text-white/80">
+                            Várunk szeretettel az online nyílt napon, ahol minden információt megkapsz a sikeres továbbtanuláshoz. Csatlakozz egy kattintással!
+                        </p>
+                        <a href="https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-join%2F19%3Ameeting_YzM2Mjg4OWMtYjlkOS00M2VkLWE3NmItMjM1YTMwNmYzNTM0%40thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%2522d77b9052-84e8-4e3a-b61f-d1f9a03d0a8a%2522%252c%2522Oid%2522%253a%25224f2464bc-e7d3-4961-8634-f5003bad83b5%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=db9d43b2-a71b-49d0-8090-f878810af5f3&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true" target="_blank" class="inline-flex items-center gap-3 rounded-full bg-white/15 px-8 py-4 text-lg font-semibold text-white transition hover:bg-white/25 border border-white/30">
+                            <i class="fa-solid fa-headset text-yellow-300"></i>
+                            Irány a Teams megbeszélés
+                        </a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 bg-gray-800 text-white" style="background-image: linear-gradient(rgba(31, 41, 55, 0.9), rgba(31, 41, 55, 0.9)), url('https://placehold.co/1920x400/333333/FFFFFF?text=J%C3%B6v%C5%91d+A+Pannonon'); background-size:cover; background-position: center; background-attachment: fixed;">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-4">Ne maradj le a jövődről!</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Várunk szeretettel az online nyílt napon, ahol minden információt megkapsz a sikeres továbbtanuláshoz. Csatlakozz egy kattintással!</p>
-            <a href="https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-join%2F19%3Ameeting_YzM2Mjg4OWMtYjlkOS00M2VkLWE3NmItMjM1YTMwNmYzNTM0%40thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%2522d77b9052-84e8-4e3a-b61f-d1f9a03d0a8a%2522%252c%2522Oid%2522%253a%25224f2464bc-e7d3-4961-8634-f5003bad83b5%2522%257d%26anon%3Dtrue&type=meetup-join&deeplinkId=db9d43b2-a71b-49d0-8090-f878810af5f3&directDl=true&msLaunch=true&enableMobilePage=true&suppressPrompt=true" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg transition duration-300 transform hover:scale-105 inline-block shadow-lg">
-                Irány a Teams megbeszélés
-            </a>
+            <section class="mb-16 text-center">
+                <div class="glass-card px-8 py-12">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Ismerd meg mesterképzéseinket részletesebben!</h2>
+                    <p class="text-slate-600 mb-6">
+                        Böngészd végig a Mérnöki Kar mesterszakjait, és találd meg a hozzád illő képzést részletes leírásokkal és felvételi információkkal.
+                    </p>
+                    <a href="https://felveteli.mk.uni-pannon.hu/index.php/kepzeseink#mesterkepzesek" target="_blank" class="info-link inline-flex items-center gap-2 text-lg font-semibold text-blue-600 hover:text-blue-800">
+                        Mesterképzéseink listája
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </section>
         </div>
-    </section>
-    
-    <!-- More Info Link -->
-    <section class="py-16">
-        <div class="container mx-auto px-6 text-center">
-             <h2 class="text-2xl font-bold text-gray-800 mb-4">Ismerd meg mesterképzéseinket részletesebben!</h2>
-             <a href="https://felveteli.mk.uni-pannon.hu/index.php/kepzeseink#mesterkepzesek" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold text-lg group">
-                Mesterképzéseink listája <span class="group-hover:ml-2 transition-all duration-200">→</span>
-             </a>
-        </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-6 text-center text-gray-400">
-            <p>&copy; 2025 Pannon Egyetem, Mérnöki Kar. Minden jog fenntartva.</p>
-        </div>
-    </footer>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
-        // --- COUNTDOWN TIMER ---
-        const countDownDate = new Date("Nov 4, 2025 17:30:00").getTime();
-        const countdownContainer = document.getElementById("countdown-container");
+        const countDownDate = new Date('Nov 4, 2025 17:30:00').getTime();
+        const countdownContainer = document.getElementById('countdown-container');
 
         const interval = setInterval(function() {
             const now = new Date().getTime();
@@ -204,69 +417,67 @@
 
             if (distance < 0) {
                 clearInterval(interval);
-                countdownContainer.innerHTML = `<div class="bg-green-500 text-white font-bold py-4 px-10 rounded-full text-lg">AZ ESEMÉNY ELKEZDŐDÖTT</div>`;
+                countdownContainer.innerHTML = '<div class="countdown-tile px-8 py-4 text-center text-white bg-emerald-500/80 border border-white/40">Az esemény elkezdődött</div>';
                 return;
             }
 
-            document.getElementById("days").textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
-            document.getElementById("hours").textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("minutes").textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("seconds").textContent = Math.floor((distance % (1000 * 60)) / 1000);
-
+            document.getElementById('days').textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('minutes').textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000);
         }, 1000);
 
-        // --- BENEFITS SECTION ---
         const benefits = [
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>`,
-                title: "Komplex, specifikus tudás",
-                description: "Mélyítsd el ismereteidet a választott szakterületen."
+                icon: '<i class="fa-solid fa-layer-group text-3xl text-sky-500"></i>',
+                title: 'Komplex, specifikus tudás',
+                description: 'Mélyítsd el ismereteidet a választott szakterületen.'
             },
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>`,
-                title: "Fejlett problémamegoldás",
-                description: "Valós ipari problémákon keresztül válj a megoldások mesterévé."
+                icon: '<i class="fa-solid fa-puzzle-piece text-3xl text-sky-500"></i>',
+                title: 'Fejlett problémamegoldás',
+                description: 'Valós ipari problémákon keresztül válj a megoldások mesterévé.'
             },
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>`,
-                title: "Kiemelkedő karrierlehetőségek",
-                description: "Rövid elhelyezkedési idő, magas kezdőfizetés és stabil munkahely."
+                icon: '<i class="fa-solid fa-chart-line text-3xl text-sky-500"></i>',
+                title: 'Kiemelkedő karrierlehetőségek',
+                description: 'Rövid elhelyezkedési idő, magas kezdőfizetés és stabil munkahely.'
             },
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>`,
-                title: "Út a vezetői pozíciókhoz",
-                description: "A mesterdiploma elengedhetetlen a szakmai ranglétrán való feljebb jutáshoz."
+                icon: '<i class="fa-solid fa-chess-king text-3xl text-sky-500"></i>',
+                title: 'Út a vezetői pozíciókhoz',
+                description: 'A mesterdiploma elengedhetetlen a szakmai ranglétrán való feljebb jutáshoz.'
             },
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222 4 2.222V20" /></svg>`,
-                title: "Duális képzés mesterszakon is",
-                description: "Szerezz valós tapasztalatot 29 ipari partnerünk egyikénél."
+                icon: '<i class="fa-solid fa-people-group text-3xl text-sky-500"></i>',
+                title: 'Duális képzés mesterszakon is',
+                description: 'Szerezz valós tapasztalatot 29 ipari partnerünk egyikénél.'
             },
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547a2 2 0 00-.547 1.806l.477 2.387a6 6 0 00.517 3.86l.158.318a6 6 0 00.517 3.86l2.387.477a2 2 0 001.806-.547a2 2 0 00.547-1.806l-.477-2.387a6 6 0 00-.517-3.86l-.158-.318a6 6 0 01-.517-3.86l-2.387-.477a2 2 0 01-.547-1.806zM15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
-                title: "Részvétel kutatási projektekben",
-                description: "Csatlakozz a Kar kutatási tevékenységébe hallgatói munkaszerződéssel."
+                icon: '<i class="fa-solid fa-flask-vial text-3xl text-sky-500"></i>',
+                title: 'Részvétel kutatási projektekben',
+                description: 'Csatlakozz a Kar kutatási tevékenységébe hallgatói munkaszerződéssel.'
             },
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`,
-                title: "Munka mellett is elvégezhető",
-                description: "Az órarend kialakítása lehetővé teszi az egyéni feladatok és munka vállalását is."
+                icon: '<i class="fa-solid fa-briefcase text-3xl text-sky-500"></i>',
+                title: 'Munka mellett is elvégezhető',
+                description: 'Az órarend kialakítása lehetővé teszi az egyéni feladatok és munka vállalását is.'
             },
             {
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>`,
-                title: "Kiemelkedő ösztöndíjak",
-                description: "Támogatjuk a tehetséges hallgatókat, hogy a tanulmányaikra koncentrálhassanak."
+                icon: '<i class="fa-solid fa-award text-3xl text-sky-500"></i>',
+                title: 'Kiemelkedő ösztöndíjak',
+                description: 'Támogatjuk a tehetséges hallgatókat, hogy a tanulmányaikra koncentrálhassanak.'
             }
         ];
 
         const benefitsGrid = document.getElementById('benefits-grid');
         benefits.forEach(benefit => {
             const card = document.createElement('div');
-            card.className = 'benefit-card';
+            card.className = 'benefit-item glass-card px-6 py-8 flex flex-col items-start gap-4';
             card.innerHTML = `
-                ${benefit.icon}
-                <h3 class="text-xl font-bold text-gray-800 mb-2">${benefit.title}</h3>
-                <p class="text-gray-600">${benefit.description}</p>
+                <span class="inline-flex items-center justify-center rounded-2xl bg-sky-50 text-sky-600 p-4 shadow-inner">${benefit.icon}</span>
+                <h3 class="text-xl font-semibold text-slate-900">${benefit.title}</h3>
+                <p class="text-slate-600">${benefit.description}</p>
             `;
             benefitsGrid.appendChild(card);
         });
