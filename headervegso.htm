@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fejléc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .header-container {
+            display: flex;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .header-section {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            transition: flex-grow 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), background-image 0.5s ease-in-out;
+            flex-grow: 1;
+            color: white;
+            background-color: #333;
+        }
+
+        .header-section.active {
+            flex-grow: 4;
+        }
+
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 1;
+            object-fit: cover;
+        }
+
+        .section-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Inaktív fül sötétebb */
+            transition: background 0.5s ease;
+            z-index: 2;
+        }
+        
+        .header-section.active .section-overlay {
+            background: rgba(0, 0, 0, 0.2); /* Aktív fül világosabb, mert a szövegdoboznak már van háttérszíne */
+        }
+
+        .section-content, .section-bubble, .section-icon {
+            z-index: 10;
+        }
+        
+        .section-content {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Safari kompatibilitás */
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+        }
+
+        .header-section.active .section-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-bubble {
+            position: absolute;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            font-size: 1.125rem;
+            white-space: nowrap;
+            transition: all 0.5s ease;
+        }
+
+        .header-section.active .section-bubble {
+            left: 2rem;
+            transform: translateX(0);
+        }
+
+        .section-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        .header-section.active .section-icon {
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                height: auto;
+            }
+            .header-section {
+                height: 80px;
+                flex-grow: 1;
+                transition: height 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            }
+            .header-section.active {
+                height: 350px;
+            }
+            .section-bubble {
+                top: 50%;
+                left: 1.5rem;
+                transform: translateY(-50%);
+            }
+            .header-section.active .section-bubble {
+                top: 1.5rem;
+                left: 1.5rem;
+                transform: translateY(0);
+            }
+            .section-icon {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+   <div id="header-container" class="header-container mx-auto shadow-lg">
+        
+
+        <div class="header-section" data-placeholder-bg="https://placehold.co/1200x400/2ecc71/2ecc71?text=." data-active-bg="https://studentguide.uni-pannon.hu/wp-content/uploads/2023/10/Leisure-Time-1.mp4">
+            <div class="section-overlay"></div>
+            <div class="section-bubble bg-green-500">Közösség</div>
+            <div class="section-content">
+                <h3 class="text-2xl font-bold mb-2">Élénk közösségi élet</h3>
+                <p class="mb-4 text-gray-200">Kollégium, Veszprém város lehetőségei, mentorprogram és megfizethetőség.</p>
+                <a href="https://felveteli.mk.uni-pannon.hu/#egyetemi-elet"target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition-colors">Tovább</a>
+            </div>
+        </div>
+		
+		<div class="header-section" data-placeholder-bg="https://placehold.co/1200x400/3498db/3498db?text=." data-active-bg="https://felveteli.mk.uni-pannon.hu/images/foto/biotechnologia_laboratory-5074669_1920.jpg">
+            <div class="section-overlay"></div>
+            <div class="section-bubble bg-blue-500">Gyakorlat</div>
+            <div class="section-content">
+                <h3 class="text-2xl font-bold mb-2">Iparhoz kapcsolódó képzések</h3>
+                <p class="mb-4 text-gray-200">Kutatócsoportjaink és laboratóriumaink tevékenységei, ipari partnerei, kutatási területei.</p>
+                <a href="https://mk.uni-pannon.hu/labs/index.php"target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors">Tovább</a>
+            </div>
+        </div>
+
+        <div class="header-section" data-placeholder-bg="https://placehold.co/1200x400/e67e22/e67e22?text=." data-active-bg="https://studentguide.uni-pannon.hu/wp-content/uploads/2023/06/kids.jpg">
+            <div class="section-overlay"></div>
+            <div class="section-bubble bg-orange-500">Nemzetközi</div>
+            <div class="section-content">
+                <h3 class="text-2xl font-bold mb-2">Nemzetközi lehetőségek</h3>
+                <p class="mb-4 text-gray-200">Partnercégek, projektek, Erasmus és dupla diploma lehetőségek.</p>
+                <a href="https://felveteli.uni-pannon.hu/nemzetkozi-lehetosegek"target="_blank" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full transition-colors">Tovább</a>
+            </div>
+        </div>
+        
+        <div class="header-section" data-placeholder-bg="https://placehold.co/1200x400/DB2B39/DB2B39?text=." data-active-bg="https://studentguide.uni-pannon.hu/wp-content/uploads/2023/10/Communication-1.mp4">
+            <div class="section-overlay"></div>
+            <div class="section-bubble bg-red-500">Statisztika</div>
+            <div class="section-content">
+                <h3 class="text-2xl font-bold mb-2">Friss statisztikák</h3>
+                <p class="mb-4 text-gray-200">Elhelyezkedési arányok, átlagfizetés és a munkába álláshoz szükséges idő.</p>
+                <a href="https://felveteli.mk.uni-pannon.hu/#miert-a-mernoki-kar"target="_blank" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition-colors">Tovább</a>
+            </div>
+        </div>
+        
+        <div class="header-section" data-placeholder-bg="https://placehold.co/1200x400/a855f7/a855f7?text=." data-active-bg="https://studentguide.uni-pannon.hu/wp-content/uploads/2023/07/map-stock-1-min.jpg">
+            <div class="section-overlay"></div>
+            <div class="section-bubble bg-purple-500">Alumni</div>
+            <div class="section-content">
+                <h3 class="text-2xl font-bold mb-2">Alumni sikersztorik</h3>
+                <p class="mb-4 text-gray-200">Interjúk, karrierútvonalak. Az alumni közösség nemcsak a múlt emléke, hanem a jövő formálója is.</p>
+                <a href="https://alumni.uni-pannon.hu/" target="_blank" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full transition-colors">Tovább</a>
+            </div>
+        </div>
+        
+        <div class="header-section" data-placeholder-bg="https://placehold.co/1200x400/ca8a04/ca8a04?text=." data-active-bg="https://alumni.uni-pannon.hu/wp-content/uploads/2024/11/PE-campusdrone-wide.jpg">
+            <div class="section-overlay"></div>
+            <div class="section-bubble bg-yellow-600">Értéktár</div>
+            <div class="section-content">
+                <h3 class="text-2xl font-bold mb-2">Egyedülálló lehetőségek</h3>
+                <p class="mb-4 text-gray-200">Miért érdemes nálunk megalapozni a jövődet?</p>
+                <a href="https://mk.uni-pannon.hu/index.php/rolunk-hu/ertektar" target="_blank" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full transition-colors">Tovább</a>
+            </div>
+        </div>
+        
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const sections = document.querySelectorAll('.header-section');
+    const container = document.getElementById('header-container');
+    let autoPlayInterval;
+    let currentIndex = 0;
+    let activeListeners = [];
+
+    // Kezdeti beállítások: placeholder hátterek és videók előkészítése
+    sections.forEach(section => {
+        const placeholderBg = section.getAttribute('data-placeholder-bg');
+        if (placeholderBg) {
+            section.style.backgroundImage = `url('${placeholderBg}')`;
+        }
+
+        const activeBg = section.getAttribute('data-active-bg');
+        if (activeBg && activeBg.endsWith('.mp4')) {
+            const video = document.createElement('video');
+            video.src = activeBg;
+            video.className = 'bg-video';
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.style.display = 'none'; // Videó elrejtése alapból
+            section.prepend(video);
+        }
+    });
+
+    function setActiveSection(index) {
+        sections.forEach((section, i) => {
+            const video = section.querySelector('.bg-video');
+
+            if (i === index) {
+                // SZEKCIÓ AKTIVÁLÁSA
+                section.classList.add('active');
+                const activeBg = section.getAttribute('data-active-bg');
+                
+                if (activeBg) {
+                    if (activeBg.endsWith('.mp4')) {
+                        if (video) {
+                            video.style.display = 'block';
+                            video.currentTime = 0;
+                            video.play();
+                        }
+                    } else { // Ha kép
+                        section.style.backgroundImage = `url('${activeBg}')`;
+                    }
+                }
+            } else {
+                // SZEKCIÓ INAKTIVÁLÁSA
+                section.classList.remove('active');
+                const placeholderBg = section.getAttribute('data-placeholder-bg');
+                if (placeholderBg) {
+                    section.style.backgroundImage = `url('${placeholderBg}')`;
+                }
+                if (video) {
+                    video.style.display = 'none';
+                    video.pause();
+                }
+            }
+        });
+        currentIndex = index;
+    }
+
+    function startAutoPlay() {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = setInterval(() => {
+            const nextIndex = (currentIndex + 1) % sections.length;
+            setActiveSection(nextIndex);
+        }, 5000); // Időtartam növelve, hogy legyen idő megnézni a tartalmat
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+    
+    function removeAllListeners() {
+        activeListeners.forEach(({ element, type, handler }) => {
+            element.removeEventListener(type, handler);
+        });
+        activeListeners = [];
+    }
+
+    function setupEventListeners() {
+        removeAllListeners();
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            sections.forEach((section, index) => {
+                const handler = () => {
+                    setActiveSection(index);
+                    stopAutoPlay(); 
+                };
+                section.addEventListener('click', handler);
+                activeListeners.push({ element: section, type: 'click', handler });
+            });
+            startAutoPlay();
+        } else { // Asztali nézet
+            sections.forEach((section, index) => {
+                const handler = () => setActiveSection(index);
+                section.addEventListener('mouseover', handler);
+                activeListeners.push({ element: section, type: 'mouseover', handler });
+            });
+            
+            const mouseenterHandler = stopAutoPlay;
+            const mouseleaveHandler = startAutoPlay;
+
+            container.addEventListener('mouseenter', mouseenterHandler);
+            container.addEventListener('mouseleave', mouseleaveHandler);
+            
+            activeListeners.push({ element: container, type: 'mouseenter', handler: mouseenterHandler });
+            activeListeners.push({ element: container, type: 'mouseleave', handler: mouseleaveHandler });
+
+            startAutoPlay();
+        }
+    }
+
+    setActiveSection(0);
+    setupEventListeners();
+    window.addEventListener('resize', setupEventListeners);
+});
+</script>
+
+</body>
+</html>
