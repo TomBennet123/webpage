@@ -23,6 +23,17 @@
     iframe.style.display  = 'block';
 
     // mérés funkció
+    let rafId = null;
+    function scheduleMeasure() {
+      if (rafId !== null) {
+        return;
+      }
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        measure();
+      });
+    }
+
     function measure() {
       let height = 0;
       try {
@@ -31,17 +42,37 @@
           console.warn('[AutoHeight] iframe document nem elérhető még.');
           return;
         }
+        const previousHeight = iframe.style.height;
+        // ideiglenesen nullára állítjuk, hogy a mérésnél ne maradjon
+        // a korábbi (esetleg túl magas) viewport érték.
+        iframe.style.height = '0px';
+
         const h1 = doc.documentElement.scrollHeight;
         const h2 = doc.documentElement.offsetHeight;
+        const h5 = doc.documentElement.clientHeight;
         const h3 = doc.body?.scrollHeight || 0;
         const h4 = doc.body?.offsetHeight  || 0;
-        height = Math.max(h1, h2, h3, h4);
+        const h6 = doc.body?.clientHeight || 0;
+        const rectRoot = doc.documentElement.getBoundingClientRect();
+        const rectBody = doc.body?.getBoundingClientRect();
+        const h7 = Math.round(rectRoot?.height || 0);
+        const h8 = Math.round(rectBody?.height || 0);
+
+        height = Math.max(h1, h2, h3, h4, h5, h6, h7, h8);
+
+        // visszaállítjuk a korábbi értéket, hogy csak akkor legyen új érték,
+        // ha sikerült mérni.
+        iframe.style.height = previousHeight;
 
         console.debug('[AutoHeight] mérés-eredmények:', {
           scrollHeight: h1,
           offsetHeight: h2,
+          clientHeight: h5,
           bodyScrollHeight: h3,
           bodyOffsetHeight: h4,
+          bodyClientHeight: h6,
+          rectDocument: h7,
+          rectBody: h8,
           chosen: height
         });
       } catch(e) {
@@ -75,8 +106,8 @@
         const imgs = Array.from(doc.images || []);
         imgs.forEach(img => {
           if (!img.complete) {
-            img.addEventListener('load', measure, { passive:true });
-            img.addEventListener('error', measure, { passive:true });
+            img.addEventListener('load', scheduleMeasure, { passive:true });
+            img.addEventListener('error', scheduleMeasure, { passive:true });
           }
         });
       } catch(e){}
@@ -84,26 +115,29 @@
       // ResizeObserver
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
-        const ro = new ResizeObserver(measure);
+        const ro = new ResizeObserver(scheduleMeasure);
         ro.observe(doc.documentElement);
       } catch(e){}
 
       // MutationObserver
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
-        const mo = new MutationObserver(measure);
+        const mo = new MutationObserver(scheduleMeasure);
         mo.observe(doc.documentElement, { childList:true, subtree:true, attributes:true });
       } catch(e){}
 
       // transition/animation végén
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
-        doc.addEventListener('transitionend', measure, { passive:true, capture:true });
-        doc.addEventListener('animationend',  measure, { passive:true, capture:true });
+        doc.addEventListener('transitionend', scheduleMeasure, { passive:true, capture:true });
+        doc.addEventListener('animationend',  scheduleMeasure, { passive:true, capture:true });
+        doc.addEventListener('toggle',        scheduleMeasure, { passive:true, capture:true });
+        doc.addEventListener('click',         scheduleMeasure, { passive:true, capture:true });
+        doc.addEventListener('keyup',         scheduleMeasure, { passive:true, capture:true });
       } catch(e){}
 
       // opcionális: biztonsági periódikus mérés
-      const intervalId = setInterval(measure, 2000);
+      const intervalId = setInterval(scheduleMeasure, 2000);
 
       // opcionális cleanup lehetőség
       iframe.cleanupAutoHeight = () => {
