@@ -140,15 +140,6 @@
         }
 
         /* Responsive */
-        @media (max-width:767px){
-            .page-wrapper{ flex-direction:column; }
-            .sidebar{ position:relative; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--brand-100); box-shadow:0 2px 8px rgba(0,0,0,0.05); padding:1.5rem 1rem; }
-            .sidebar .logo{ justify-content:flex-start; }
-            nav .nav-links{ flex-direction:row; flex-wrap:wrap; gap:.5rem; }
-            nav .nav-links li{ flex:1 1 calc(50% - .5rem); }
-            nav .nav-links li a{ text-align:center; }
-        }
-
         @media (min-width:768px){
             .hero h1{ font-size:3.75rem; }
             .hero .slogan{ font-size:2.25rem; }
@@ -165,25 +156,7 @@
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <aside class="sidebar">
-            <a href="https://felveteli.mk.uni-pannon.hu/index.php/en/" class="logo">
-                <img src="https://targygraf.mk.uni-pannon.hu/images/docman-files/logo/mk_logo_kek.png" alt="Pannonia Engineering Logo" class="logo-img">
-            </a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#why-us">Why Us?</a></li>
-                    <li><a href="#programs">Programs</a></li>
-                    <li><a href="#apply">Apply</a></li>
-                    <li><a href="#current-students">For Current Students</a></li>
-                    <li><a href="#student-life">Student Life</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <main>
+    <main>
         <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="container">
@@ -559,9 +532,8 @@ Although you should indeed take the opportunity to travel and make lots of frien
                 </div>
             </div>
         </section>
-        
+
     </main>
-    </div>
 
     <!-- Footer -->
     <footer id="contact" class="main-footer">
